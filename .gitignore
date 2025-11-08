@@ -1,0 +1,14 @@
+# macOS metadata
+.DS_Store
+
+# Python cache / virtual envs
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Local data/output directories
+data/
+reports/
+

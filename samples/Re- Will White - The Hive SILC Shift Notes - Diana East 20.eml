@@ -1,0 +1,944 @@
+Received: from ME3PR01MB6120.ausprd01.prod.outlook.com (2603:10c6:220:da::7)
+ by SY8PR01MB9137.ausprd01.prod.outlook.com with HTTPS; Thu, 28 Mar 2024
+ 09:51:13 +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=pass;
+ b=jz/WBCa1pwUoismVkHjlQ8Wm+JEauCLRG1SaXFajK6TczevrZf2BRQFtqwPJJ8WFJg2OdmeEcTfzBe/7G+30NlOw/AxhC8Kzho8qvxcPSc+HnWTFuq0K2FHhIFcvsiTLGBGTqFEHFnahS1JbJEpR1r8AuGRJgqprwwYziTirNvfXhbOfjVKY+yIuFMP1iwFSuXrWXljOM1pyuYs9CAdtFLnsjMSE5IX2zDgWJpfGrORr3za3UtN6z91EjWH9j5vJIw/iyr6J7LVI36ctRplEKuZG4ap4W9n643kyOhj4o41cdTefXIvmPGba40otmiYdD++dpjBA+AkdHKKv0hZm8Q==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ZPLaPaTPDzfjzugywQtIe97zUjnyyeG49CUZ+6Qx1+Y=;
+ b=RWc+AlzsSngTRsyVfl+/QaDpGob8l54tSb9FhWUGYZbIr069PH03Ajl7aWgTgknMCzPBE5FSGFvatFhFuF4JwbWy+HnkefK4Q/Iav3/p7a0QkucH1xRxlY3Y0JW7lhF/GJgp5Vnc0F0ZV9gaPEccJLVi6fvzkH5R8oiORie5Jfw9mabW2vuGxIgDEVfaCs6NaHvML6r26gzod3CfNPpNCSkyCgipWM7R7U/UKGv0CbUgGdrU9+BhiPalpNsfsX5iXiwLSD2tnU8xovh+qm/cPt7VguwnT8d1Yj3f1SrHfWweTOkAgGuimXONt+0F2MVV3BPzH8RXKEKTcN2VYdo/tw==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 152.160.228.232) smtp.rcpttodomain=mogadoreprojects.com
+ smtp.mailfrom=jotform.com; dmarc=pass (p=reject sp=reject pct=100)
+ action=none header.from=jotform.com; dkim=pass (signature was verified)
+ header.d=jotform.com; arc=pass (0 oda=0 ltdi=0 93)
+Received: from SY5PR01CA0074.ausprd01.prod.outlook.com (2603:10c6:10:1f4::18)
+ by ME3PR01MB6120.ausprd01.prod.outlook.com (2603:10c6:220:da::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.33; Thu, 28 Mar
+ 2024 09:51:11 +0000
+Received: from SY2PEPF00004FF2.ausprd01.prod.outlook.com
+ (2603:10c6:10:1f4:cafe::62) by SY5PR01CA0074.outlook.office365.com
+ (2603:10c6:10:1f4::18) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.13 via Frontend
+ Transport; Thu, 28 Mar 2024 09:51:11 +0000
+Authentication-Results: spf=pass (sender IP is 152.160.228.232)
+ smtp.mailfrom=jotform.com; dkim=pass (signature was verified)
+ header.d=jotform.com;dmarc=pass action=none
+ header.from=jotform.com;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of jotform.com designates
+ 152.160.228.232 as permitted sender) receiver=protection.outlook.com;
+ client-ip=152.160.228.232; helo=pool2-127.formresponse.com; pr=C
+Received: from pool2-127.formresponse.com (152.160.228.232) by
+ SY2PEPF00004FF2.mail.protection.outlook.com (10.167.241.4) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7409.10 via Frontend Transport; Thu, 28 Mar 2024 09:51:09 +0000
+Received: from go-workers-w1xw (pool2-273.formresponse.com [152.160.228.19])
+	by pool2-127.formresponse.com (Postfix) with ESMTPSA id F016A64C088F;
+	Thu, 28 Mar 2024 05:51:06 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jotform.com; s=mailv2;
+	t=1711619467; h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:mime-version:mime-version:
+	 content-type:content-type:  content-transfer-encoding:content-transfer-encoding;
+	bh=ZPLaPaTPDzfjzugywQtIe97zUjnyyeG49CUZ+6Qx1+Y=;
+	b=WFWmi9gJDMHJwwSrQfLap4VM3wGItyEQJMz5P2y9zojL+HAModBtvlevTqxja5Z+qW+d9S
+	OLc8W4MAunB5egzYT2ooB6T9IRAL5KU72q5PMpn7TuiQ4cTt2XpNUBLCz3l4UhJlak2fM+
+	jQYuiE7YE4hyDg18T/ys7stOGhpk6Kc824P+7V3bi4FdLwhvDk3TcKRGxerlQ9LQqKq866
+	1AxmfC5TzNop/H9ZncRjaf4r688qvLu3xtqZD+d5UPGxbp8kg5rOJl13RnIrNHxGGDWrYu
+	T9m44Apg6i7TBDav3NEMhWaI0z66MwgHhYbmRdTPbLYvxKJuQnWldoiWbuPZ2g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=jotform.com;
+	s=mailv2; t=1711619467;
+	h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:mime-version:mime-version:
+	 content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=ZPLaPaTPDzfjzugywQtIe97zUjnyyeG49CUZ+6Qx1+Y=;
+	b=ncMl6yzsvA9S5tSRedPz+45rgVlw50AvkAcjvU0z8fis5cS8/DDki9M/IPmlTupmWDzGNv
+	t1dd+JM7Ds7DSa1ULdiFxPRCYxH1MyhNU62aaawAxbpBemIlTl3Wc+C34G+biDc7V8uJiQ
+	Bw+fZD2mSz+LQg/xP1O9b0JtHb4d8i9+MuUld1rEm5gK+wNGnVwBrQZ8RO6YAyYEWyAgpF
+	muK1hKuP24uYjvOXg+BJ6hxu0xtj5fMOIiKlcT/Zx80M2ZrlnGvRfxVtyMvSWsuO/iM1Sn
+	fH7u4+x7CJdqJS26RHHcobKFWv3eHipO9R52Sjs3+1Yvw5iFG/wWp1U6JjfTPQ==
+ARC-Seal: i=1; s=mailv2; d=jotform.com; t=1711619467; a=rsa-sha256;
+	cv=none;
+	b=beyiqi/Mc1CMxokUiZHK0on9nGUmQEPsIydfCfJikK+Q3A7MUzpDiKSdwe4Tw7mvf+LNq0
+	asQf1ojDZGv567IlFnQ62BhbvavVb8Pyf9ye8uS4K18YN+sUQIHms803fRSjro9p4k7BJx
+	GZnPLPD3Jwb+l/+s1ZEHtYlc666eHGjOQyE8yevLpukPeE4i4RJfxUt0lGHWKsUNa6z/Ff
+	YzrZUu2GjDmEJ6e8Ku8x+Q7lEChbJoJz/GksjevtrniwXePjznwIvpY+ICFzcOroXzojlR
+	7C7gnf69W00Zv0bA1j9lhxGpBkDpofoa27BytBz2KiTKNLp6a2IKyLPZEZN6Vg==
+ARC-Authentication-Results: i=1;
+	pool2-127.formresponse.com;
+	auth=pass smtp.auth=noreply@jotform.com smtp.mailfrom=returns@jotform.com
+Date: Thu, 28 Mar 2024 05:51:06 -0400
+To: allie.le.blanc@icloud.com, George.White@mogadoreprojects.com, diana.fraser@silc.coop
+From: Jotform <noreply@jotform.com>
+Reply-To: allie.le.blanc@icloud.com, george.white@mogadoreprojects.com, diana.fraser@silc.coop
+Subject: Re: Will White - The Hive SILC Shift Notes - Diana East
+Message-ID: <li15hgJ1Rc9vbFTjZFQ3XTEvWb7F1BmFK95q60HyQ@go-workers-w1xw>
+X-Mailer: Jotform Email Services
+Feedback-ID: 230326772415857:notification:jotform
+JotSMTP: true
+Content-Type: multipart/alternative;
+ boundary="b1=_li15hgJ1Rc9vbFTjZFQ3XTEvWb7F1BmFK95q60HyQ"
+Content-Transfer-Encoding: 8bit
+Return-Path: returns@jotform.com
+X-MS-Exchange-Organization-ExpirationStartTime: 28 Mar 2024 09:51:10.3927
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: c8038f76-faff-4d81-6764-08dc4f0c98f1
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 6467e23c-3c28-4e57-9522-9b446015635c:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SY2PEPF00004FF2:EE_|ME3PR01MB6120:EE_|SY8PR01MB9137:EE_
+X-MS-Exchange-Organization-AuthSource: SY2PEPF00004FF2.ausprd01.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-Office365-Filtering-Correlation-Id: c8038f76-faff-4d81-6764-08dc4f0c98f1
+X-MS-Exchange-Organization-SCL: -1
+X-Microsoft-Antispam: BCL:3;
+X-Forefront-Antispam-Report: CIP:152.160.228.232;CTRY:US;LANG:en;SCL:-1;SRV:;IPV:NLI;SFV:SFE;H:pool2-127.formresponse.com;PTR:pool2-127.formresponse.com;CAT:NONE;SFS:(13230031);DIR:INB;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Mar 2024 09:51:09.7520
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: c8038f76-faff-4d81-6764-08dc4f0c98f1
+X-MS-Exchange-CrossTenant-Id: 6467e23c-3c28-4e57-9522-9b446015635c
+X-MS-Exchange-CrossTenant-AuthSource: SY2PEPF00004FF2.ausprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: ME3PR01MB6120
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:03.7569727
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.7409.026
+X-Microsoft-Antispam-Mailbox-Delivery:
+	wl:1;pcwl:1;ucf:0;jmr:0;auth:0;dest:I;ENG:(910001)(944506478)(944626604)(920097)(811239)(255002)(410001)(930097)(140003);
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?RCJQ5sR3+0UEBHDnAFGQetGC9sOLsCnmrYO/4kNievLCHWFtQEsZenxyvu3j?=
+ =?us-ascii?Q?yYSoSMW05yf/C0KADIEa5R5UzyKAmPNg9EJ+3GNs30ckD8KZvfSeRyvCIoPC?=
+ =?us-ascii?Q?5egKJQj7EGcAWSVWZJjeLKtXYsSumYwyfV2XVvNZL0Qz2mA5v8aScsoK5sta?=
+ =?us-ascii?Q?X/H4RzvCrmD8YEZaJyQqdppoQ8c3HsFif1Iv5mts7CEsSMQw/isUGhAvDg0Q?=
+ =?us-ascii?Q?4+cQb3OXgZY3eUwZRtcNZKf3v5JtT4rLaxySLilB+0nq1MWNwGhnAxX+LUki?=
+ =?us-ascii?Q?e+kyT2oAo6oNNqrFcOrg4a7PcD23srRE4kKxsUaLwFlUYh6xKssCS2+GHLMU?=
+ =?us-ascii?Q?AyWtndK1TyEa+RIQi9LvA+X037pQUHUyRcjhVJRysCEMdZg+F0rIlrJYwJXg?=
+ =?us-ascii?Q?5sTVg1YvXrDBMZ7nKLsEXli+nU254YDSnRcW3tkk4IinaVmitRt9X+D57nSr?=
+ =?us-ascii?Q?Rg3ObYSenHD64dt6l6kCzs6dNOQRJx8c9hrhIehwZbLKrCdRKL2Aaz7I0NRu?=
+ =?us-ascii?Q?dL6+ZKAYJGYC2Yj+brraQp1hDzTqbJlTmuYhvfjMlGHY6KrwUkjoBlT0W5f/?=
+ =?us-ascii?Q?EUgEykYRixixfePjZVg/4DL6xu50hN95pdBfy7qVS1Fyl0LF1uOnzOHqtRB+?=
+ =?us-ascii?Q?BRh2BbuE16XyOIfUJWoSbM9/riA38zSASKSosjTpAdOB+ejWBu1g3NK3pYJG?=
+ =?us-ascii?Q?zO7OfRTCl+2Cwl2Y+/E8CoULhVNobOOpzchVqlQ3gOGOtAe+dpXI6Ruia2rg?=
+ =?us-ascii?Q?oyvvLAz5ayOdOrwWTTX619A/vvNpFtFchZHkYzsgHBnGgGL6uHN7xfNpUf7D?=
+ =?us-ascii?Q?J3F+OSp2aUZqSci6A4Bq7F+Gv1HFcUp7Q4CkvI1uTgrg0LUgNc8pU87R3i9W?=
+ =?us-ascii?Q?MOKDiX1M1qCruCvXEGCTVWcRivWLdV+tGCVUSbG3AmvGHW83pdQwpX4a7lT9?=
+ =?us-ascii?Q?2KHrTM+3mIRAFs+IF2fEy4x39gm6/nSW10U8y5IMWQz6yxFHAeQuj1ZLw4/W?=
+ =?us-ascii?Q?cJzCmBdpa9OM22YGf0Zz/4xla/4GDfgHag1qOMhK/WOya2KEVgl2/rT+7gGz?=
+ =?us-ascii?Q?SjzoWDhTACJJsxoKgLI7kRWjmdiZehkf78pvTjqhqx5ZJxTWqYDtBTOY4FAL?=
+ =?us-ascii?Q?0LoEP1EX6UGSB9SQz1Hmi4ifhlGIZMLzGKpHOzkwQc2ghC2daNHLZe9BfvZC?=
+ =?us-ascii?Q?eUjFDkWDcy5k4ZrH872rbZTQbNJuktRgpNUdsYPzXSMt4LL0YcQ+sjmlIr2a?=
+ =?us-ascii?Q?EE+52W/tQ7nl8Ez4jYHYxBhy6oNo5pXdQwQ5xj+SI/FMmhiGNHVzUxaduPg+?=
+ =?us-ascii?Q?kv8Vh+DFK3pHlEK8oJwYRIzvnFApBwQBk4RUkyJ5ShtGggF8XOmhx2zwxJyb?=
+ =?us-ascii?Q?7F5VYSaEdv5zC/yjg71xE0iGY+ujB9/uRc0OW4Xn+L1EII1GeYLxSV/MePew?=
+ =?us-ascii?Q?VYbs8F5aubGKXUreGr7UVO9Hle401uFJs7wUHNlimAYuTW5kRFzNvng6GaTS?=
+ =?us-ascii?Q?BfR3bcWOHa5UhqAZl5TKJLvBWJQyJ1GFb72DmtDun5tqx/+uMxFi6hRJAGQ2?=
+ =?us-ascii?Q?9+jkbBIeGQVM8XeP9XvZCCtR1GqvSqyD7m/USv19fIKwPTyI6mOOdpj5bOxt?=
+ =?us-ascii?Q?pWZBGRGydNCPXT92sgdKX6JGp+Gjf2iNcalnFhqYSvHg1Z3TIqga36lnjP8h?=
+ =?us-ascii?Q?81MfKU17DMF8g5ymT6Ote3c2WoV1Pvd5XQU14jjPROMvN+j7b2p87qiXaDBI?=
+ =?us-ascii?Q?Glyq6wjIhBiap6K9vxIIX7bxrYkMyRv0CCNaqAO2bBaI+IulIPTDAa2XWU65?=
+ =?us-ascii?Q?lTtIuU7y5JDJfoDG44Ax4CyVfUcTHuAa6LMGE9BNokzBDomWXBP8zfDo?=
+MIME-Version: 1.0
+
+--b1=_li15hgJ1Rc9vbFTjZFQ3XTEvWb7F1BmFK95q60HyQ
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+Will White - The Hive SILC Shift Notes
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+
+Who is this report about?Will WhiteShift date (date your shift
+ended)2024/03/28What day of the week is it?ThursdayWhich shift are you reporting
+on?Afternoon (3pm-10pm)This report was prepared byDiana EastName of other staff
+on shiftKristal Did will leave the home to access the outside of the home?YesHow
+many times?1Where did he go and what did he do?we hung out the washing in the
+backyard 2:1Was this a new community access location?NoDid the resident attend
+an appointmentNoDid you use the House Vehicle today?NoIf yes, please enter start
+and end kms on Vehicle Logn/aDid you provide personal care to Will?YesDid you
+notice any marks, bruises, cuts, burns, rashes, scabs or other injuries?NoSelf -
+Care Routine Fully IndependentSet up assistanceVerbal promptingVisual
+promptingPhysical assistanceDid not completeShower TransferAdjust water
+temperture/ turn on waterWash lower bodyWash upper bodyWash hairDrying selfDress
+upper bodyDress lower bodyBrush TeethShave faceNail CareDeoderoantToiletingWash
+handsWipe faceDid the resident seem well/unwell during the shift?UnwellSymptoms/
+Commentscoughing quite a lot and blocked upDid Will have a Bowel Movement (BM)
+during your shift?YesPlease indicate time and describe Type if known (refer to
+chart in bathroom)about 4pm and runnyDid Will refuse to participate in any task
+on his visual routineNoWhat did the resident choose for their main meal during
+your shift?spaghetti bologneseWhat snacks did the resident choose during your
+shift? Was this outside of regular meal time."blue" potato chipsHow did the
+resident participate in the preparation of meals?William chose his afternoon
+snack and got out everything he needed.
+For dinner, he helped put the spaghetti in boiling water and also tipped the
+sauce into the pan.Was the resident's bank card used on your shift?NoDid Will
+have PRN at day program today?No, he did not have anyDid Will require support to
+manage his emotions or behaviour?YesWhich behaviour did he display?Hitting his
+own chin, nose or headHitting the wall with his headIn what context did the
+behaviour occur?When presented with non-preferred task or meal/objectWhich
+strategies were effective to help Will return to baseline?Reassurance/asked him
+what was wrongGive him personal space.Reaffirmed his choice or preferenceRemind
+him of rules/expectations/natural consequences (kick your bed, sore foot, break
+tv, cannot watch shows etc.)Honoured his decision when he said no to
+somethingWere these strategies effective?YesWhat time did he first become
+dysregulated?6:30 PMDid you administer PRN?NoDid will struggle with transitions
+inside the house?NoDid will struggle to accept/manage a change, or if something
+was unavailable?NoWhat goals did Will work towards this shift? (tick all
+relevant)Spending time in the backyardQuality time with staff, engaged in
+activities.Details of the activities undertaken?Hanging out washing and helping
+to prepare dinnerWere there any barriers to working on goals this shift?William
+was unwell with cough and cold symptoms. He ate his first bowl of spaghetti
+bolognese very happily but came back from washing his hands to say he'd had
+enough. He then got a little dysregulated and hit his head against the wall and
+became a little vocal.
+He took his medication, dimetapp (cough), and mountain chocolate (toblerone)
+then watched a bit more tv, and soon calmed down.Tips and Suggestions for other
+goals to work on for next monthWilliam was happy although quite sick so staff
+will notice he's not quite himself.Select the below shift duties which you
+completed while on shiftCleaned & tidied bathroomCleaned & tidied
+kitchenSupported another staff memberFolded, hung out or collected clothesWas
+the Will involved in jobs around the house?YesWhich tasks/how was Will
+supported?hang out washing and prepare mealsDid any injuries or incidents occur
+during your shift?NoWere there any near misses on this shift? (When William
+escalated but you were able to calm him down)YesIf yes, please describe here.He
+ate his first bowl of spaghetti bolognese very happily but came back from
+washing his hands to say he'd had enough. He then got a little dysregulated and
+hit his head against the wall and became a little vocal.
+He took his medication, dimetapp (cough), and mountain chocolate (toblerone)
+then watched a bit more tv, and soon calmed down.Were any hazards identified
+during your shift? (e.g a hazard is anything which might have cause an
+injury)NoWas there any visitors during this shift?YesName of visitor and reason
+for visit:Staff member, Kristal, was on "buddy" shift from 3-7pm.Any other
+issues, concerns or successes you would like to share?nois there anything you
+need your colleague to follow up on next shift or over the next few days?NoWhich
+of the following (if any) did you feel due to your
+shift?SatisfiedProudAppreciated
+ 
+ 
+
+
+ 
+ 
+ 
+ 
+You can edit this submission and view all your submissions easily.
+
+--b1=_li15hgJ1Rc9vbFTjZFQ3XTEvWb7F1BmFK95q60HyQ
+Content-Type: text/html; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w=
+3.org/TR/REC-html40/loose.dtd"><html><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+><meta name=3D"viewport" content=3D"width=3Ddevice-width"><meta http-equiv=
+=3D"X-UA-Compatible" content=3D"IE=3Dedge"><meta name=3D"x-apple-disable-me=
+ssage-reformatting"><style>
+                    table {
+                        border-spacing: 0 !important;
+                        border-collapse: collapse !important;
+                        margin: 0 auto !important;
+                    }
+                    table, td {
+                        border-spacing: 0 !important;
+                        border-collapse:collapse !important;
+                    }
+                    @media screen and (max-device-width: 700px), screen and=
+ (max-width: 700px) {
+                        .email-container {
+                            width: 100% !important;
+                            margin: auto !important;
+                        }
+                        .mobile-padding-fix {
+                            padding-left: 15px !important;
+                            padding-right: 15px !important;
+                        }
+                    }
+                    @media screen and (max-device-width: 480px), screen and=
+ (max-width: 480px) {
+                        td.questionColumn, td.valueColumn, td.footerCol1, t=
+d.footerCol2 {
+                            display: block !important;
+                            width: 100% !important;
+                        }
+                        td.questionColumn {
+                            padding: 0 !important;
+                        }
+                        td.valueColumn {
+                            padding: 4px 0 16px !important;
+                        }
+                        td.footerCol1, td.footerCol2 {
+                            text-align: center !important;
+                        }
+                        td.footerCol1 {
+                            padding-bottom: 16px
+                        }
+                    }
+                </style></head><body width=3D"100%" style=3D"width: 100%; m=
+argin: 0 auto !important; padding: 0 !important; mso-line-height-rule: exac=
+tly; background-color: #F3F3FE;">
+<table class=3D"email-container body-bg" style=3D"width: 720px; text-align:=
+ center;" border=3D"0" width=3D"720" cellspacing=3D"0" cellpadding=3D"0" bg=
+color=3D"#F3F3FE"><tbody><tr><td height=3D"36"> </td>
+</tr><tr><td class=3D"mobile-padding-fix" style=3D"padding: 0 40px;" align=
+=3D"center">
+<table style=3D"width: 100%;" border=3D"0" width=3D"100%" cellspacing=3D"0"=
+ cellpadding=3D"0" bgcolor=3D"#F3F3FE"><tbody><tr><td align=3D"center" heig=
+ht=3D"40"><img style=3D"display: block; height: 40px;" src=3D"https://cdn.j=
+otfor.ms/assets/img/logo2021/jotform-logo.png" alt=3D"Jotform Logo" height=
+=3D"40"></td>
+</tr><tr><td height=3D"28"> </td>
+</tr><tr><td style=3D"line-height: 0; font-size: 0; border-radius: 4px 4px =
+0 0;" bgcolor=3D"#FF6100" height=3D"8"> </td>
+</tr><tr><td>
+<table style=3D"width: 100%;" border=3D"0" width=3D"100%" cellspacing=3D"0"=
+ cellpadding=3D"0" bgcolor=3D"#FFFFFF"><tbody><tr><td style=3D"line-height:=
+ 0; font-size: 0;" colspan=3D"3" height=3D"16"> </td>
+</tr><tr><td width=3D"36"> </td>
+<td align=3D"left" valign=3D"middle">
+<h3 style=3D"display: inline-block; vertical-align: middle; margin: 0; font=
+-size: 18px; font-weight: bold; color: #0a1551; font-family: Helvetica, san=
+s-serif;">Will White - The Hive SILC Shift Notes</h3>
+</td>
+<td width=3D"36"> </td>
+</tr><tr><td width=3D"36"> </td>
+<td style=3D"border-bottom: 1px solid #ECEDF2; line-height: 0; font-size: 0=
+;" height=3D"16"> </td>
+<td width=3D"36"> </td>
+</tr></tbody></table></td>
+</tr></tbody></table><table style=3D"width: 100%; border-radius: 0 0 4px 4p=
+x;" border=3D"0" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" bgcolor=
+=3D"#FFFFFF"><tbody><tr><td colspan=3D"3" height=3D"24"> </td>
+</tr><tr><td width=3D"36"> </td>
+<td align=3D"center">
+<table id=3D"emailFieldsTable" class=3D"mceNonEditable" style=3D"font-size:=
+ 14px; font-family: Helvetica, sans-serif;" border=3D"0" width=3D"100%" cel=
+lspacing=3D"0" cellpadding=3D"5"><tbody id=3D"emailFieldsTableBody"><tr id=
+=3D"row_104" class=3D"questionRow"><td id=3D"question_104" class=3D"questio=
+nColumn" style=3D"padding: 12px 8px 12px 0; color: #6f76a7;" valign=3D"top"=
+ width=3D"30%">Who is this report about?</td><td id=3D"value_104" class=3D"=
+valueColumn" style=3D"padding: 12px 0; color: #0a1551; font-weight: 500;" v=
+align=3D"top" width=3D"70%"><table cellspacing=3D"0" cellpadding=3D"0" bord=
+er=3D"0" style=3D"margin: 0 !important; display: inline-block;"><tr><td sty=
+le=3D"padding-right: 8px; padding-bottom: 4px;"><table><tr><td style=3D"bor=
+der-radius: 4px; color: #0a1551; background: #D0F0FE; font-size: 13px; padd=
+ing: 6px 12px; font-weight: 500;">Will White</td></tr></table></td></tr></t=
+able></td></tr><tr id=3D"row_3" class=3D"questionRow"><td id=3D"question_3"=
+ class=3D"questionColumn" style=3D"padding: 12px 8px 12px 0; color: #6f76a7=
+;" valign=3D"top" width=3D"30%">Shift date (date your shift ended)</td><td =
+id=3D"value_3" class=3D"valueColumn" style=3D"padding: 12px 0; color: #0a15=
+51; font-weight: 500;" valign=3D"top" width=3D"70%">2024/03/28</td></tr><tr=
+ id=3D"row_105" class=3D"questionRow"><td id=3D"question_105" class=3D"ques=
+tionColumn" style=3D"padding: 12px 8px 12px 0; color: #6f76a7;" valign=3D"t=
+op" width=3D"30%">What day of the week is it?</td><td id=3D"value_105" clas=
+s=3D"valueColumn" style=3D"padding: 12px 0; color: #0a1551; font-weight: 50=
+0;" valign=3D"top" width=3D"70%"><table cellspacing=3D"0" cellpadding=3D"0"=
+ border=3D"0" style=3D"margin: 0 !important; display: inline-block;"><tr><t=
+d style=3D"padding-right: 8px; padding-bottom: 4px;"><table><tr><td style=
+=3D"border-radius: 4px; color: #0a1551; background: #D0F0FE; font-size: 13p=
+x; padding: 6px 12px; font-weight: 500;">Thursday</td></tr></table></td></t=
+r></table></td></tr><tr id=3D"row_240" class=3D"questionRow"><td id=3D"ques=
+tion_240" class=3D"questionColumn" style=3D"padding: 12px 8px 12px 0; color=
+: #6f76a7;" valign=3D"top" width=3D"30%">Which shift are you reporting on?<=
+/td><td id=3D"value_240" class=3D"valueColumn" style=3D"padding: 12px 0; co=
+lor: #0a1551; font-weight: 500;" valign=3D"top" width=3D"70%">Afternoon (3p=
+m-10pm)</td></tr><tr id=3D"row_35" class=3D"questionRow"><td id=3D"question=
+_35" class=3D"questionColumn" style=3D"padding: 12px 8px 12px 0; color: #6f=
+76a7;" valign=3D"top" width=3D"30%">This report was prepared by</td><td id=
+=3D"value_35" class=3D"valueColumn" style=3D"padding: 12px 0; color: #0a155=
+1; font-weight: 500;" valign=3D"top" width=3D"70%">Diana East</td></tr><tr =
+id=3D"row_39" class=3D"questionRow"><td id=3D"question_39" class=3D"questio=
+nColumn" style=3D"padding: 12px 8px 12px 0; color: #6f76a7;" valign=3D"top"=
+ width=3D"30%">Name of other staff on shift</td><td id=3D"value_39" class=
+=3D"valueColumn" style=3D"padding: 12px 0; color: #0a1551; font-weight: 500=
+;" valign=3D"top" width=3D"70%">Kristal </td></tr><tr id=3D"row_290" class=
+=3D"questionRow"><td id=3D"question_290" class=3D"questionColumn" style=3D"=
+padding: 12px 4px 12px 0; color: #6F76A7;" valign=3D"top" width=3D"30%">Did=
+ will leave the home to access the outside of the home?</td><td id=3D"value=
+_290" class=3D"valueColumn" style=3D"padding: 12px 0; color: #0A1551; font-=
+weight: 500;" width=3D"70%">Yes</td></tr><tr id=3D"row_273" class=3D"questi=
+onRow"><td id=3D"question_273" class=3D"questionColumn" style=3D"padding: 1=
+2px 4px 12px 0; color: #6f76a7;" valign=3D"top" width=3D"30%">How many time=
+s?</td><td id=3D"value_273" class=3D"valueColumn" style=3D"padding: 12px 0;=
+ color: #0a1551; font-weight: 500;" width=3D"70%">1</td></tr><tr id=3D"row_=
+274" class=3D"questionRow"><td id=3D"question_274" class=3D"questionColumn"=
+ style=3D"padding: 12px 4px 12px 0; color: #6f76a7;" valign=3D"top" width=
+=3D"30%">Where did he go and what did he do?</td><td id=3D"value_274" class=
+=3D"valueColumn" style=3D"padding: 12px 0; color: #0a1551; font-weight: 500=
+;" width=3D"70%">we hung out the washing in the backyard</td></tr><tr id=3D=
+"row_275" class=3D"questionRow"><td id=3D"question_275" class=3D"questionCo=
+lumn" style=3D"padding: 12px 4px 12px 0; color: #6f76a7;" valign=3D"top" wi=
+dth=3D"30%"> </td><td id=3D"value_275" class=3D"valueColumn" style=3D"paddi=
+ng: 12px 0; color: #0a1551; font-weight: 500;" width=3D"70%">2:1</td></tr><=
+tr id=3D"row_209" class=3D"questionRow"><td id=3D"question_209" class=3D"qu=
+estionColumn" style=3D"padding: 12px 8px 12px 0; color: #6f76a7;" valign=3D=
+"top" width=3D"30%">Was this a new community access location?</td><td id=3D=
+"value_209" class=3D"valueColumn" style=3D"padding: 12px 0; color: #0a1551;=
+ font-weight: 500;" valign=3D"top" width=3D"70%">No</td></tr><tr id=3D"row_=
+216" class=3D"questionRow"><td id=3D"question_216" class=3D"questionColumn"=
+ style=3D"padding: 12px 8px 12px 0; color: #6f76a7;" valign=3D"top" width=
+=3D"30%">Did the resident attend an appointment</td><td id=3D"value_216" cl=
+ass=3D"valueColumn" style=3D"padding: 12px 0; color: #0a1551; font-weight: =
+500;" valign=3D"top" width=3D"70%">No</td></tr><tr id=3D"row_280" class=3D"=
+questionRow"><td id=3D"question_280" class=3D"questionColumn" style=3D"padd=
+ing: 12px 4px 12px 0; color: #6f76a7;" valign=3D"top" width=3D"30%">Did you=
+ use the House Vehicle today?</td><td id=3D"value_280" class=3D"valueColumn=
+" style=3D"padding: 12px 0; color: #0a1551; font-weight: 500;" width=3D"70%=
+">No</td></tr><tr id=3D"row_287" class=3D"questionRow"><td id=3D"question_2=
+87" class=3D"questionColumn" style=3D"padding: 12px 4px 12px 0; color: #6f7=
+6a7;" valign=3D"top" width=3D"30%">If yes, please enter start and end kms o=
+n Vehicle Log</td><td id=3D"value_287" class=3D"valueColumn" style=3D"paddi=
+ng: 12px 0; color: #0a1551; font-weight: 500;" width=3D"70%">n/a</td></tr><=
+tr id=3D"row_291" class=3D"questionRow"><td id=3D"question_291" class=3D"qu=
+estionColumn" style=3D"padding: 12px 4px 12px 0; color: #6F76A7;" valign=3D=
+"top" width=3D"30%">Did you provide personal care to Will?</td><td id=3D"va=
+lue_291" class=3D"valueColumn" style=3D"padding: 12px 0; color: #0A1551; fo=
+nt-weight: 500;" width=3D"70%">Yes</td></tr><tr id=3D"row_263" class=3D"que=
+stionRow"><td id=3D"question_263" class=3D"questionColumn" style=3D"padding=
+: 12px 8px 12px 0; color: #6f76a7;" valign=3D"top" width=3D"30%">Did you no=
+tice any marks, bruises, cuts, burns, rashes, scabs or other injuries?</td>=
+<td id=3D"value_263" class=3D"valueColumn" style=3D"padding: 12px 0; color:=
+ #0a1551; font-weight: 500;" valign=3D"top" width=3D"70%"><table cellspacin=
+g=3D"0" cellpadding=3D"0" border=3D"0" style=3D"margin: 0 !important; displ=
+ay: inline-block;"><tr><td style=3D"padding-right: 8px; padding-bottom: 4px=
+;"><table><tr><td style=3D"border-radius: 4px; color: #0a1551; background: =
+#D0F0FE; font-size: 13px; padding: 6px 12px; font-weight: 500;">No</td></tr=
+></table></td></tr></table></td></tr><tr id=3D"row_272" class=3D"questionRo=
+w"><td id=3D"question_272" class=3D"questionColumn" style=3D"padding: 12px =
+8px 12px 0; color: #6f76a7;" valign=3D"top" width=3D"30%">Self - Care Routi=
+ne</td><td id=3D"value_272" class=3D"valueColumn" style=3D"padding: 12px 0;=
+ color: #0a1551; font-weight: 500;" valign=3D"top" width=3D"70%"><table sum=
+mary=3D"" cellpadding=3D"6" cellspacing=3D"0" border=3D"0" style=3D"border-=
+collapse:collapse; border-radius:6px; overflow: hidden; display: inline-blo=
+ck; border: 1px solid #e5e6ef; border-radius: 4px;"><tr><th style=3D"backgr=
+ound:#f2f3fe;">&nbsp;</th><th style=3D"background:#f2f3fe;color:#0a1551;whi=
+te-space:normal;font-weight:400;text-align:center;width:14.285714285714%">F=
+ully Independent</th><th style=3D"background:#f2f3fe;color:#0a1551;white-sp=
+ace:normal;font-weight:400;text-align:center;width:14.285714285714%">Set up=
+ assistance</th><th style=3D"background:#f2f3fe;color:#0a1551;white-space:n=
+ormal;font-weight:400;text-align:center;width:14.285714285714%">Verbal prom=
+pting</th><th style=3D"background:#f2f3fe;color:#0a1551;white-space:normal;=
+font-weight:400;text-align:center;width:14.285714285714%">Visual prompting<=
+br></th><th style=3D"background:#f2f3fe;color:#0a1551;white-space:normal;fo=
+nt-weight:400;text-align:center;width:14.285714285714%">Physical assistance=
+</th><th style=3D"background:#f2f3fe;color:#0a1551;white-space:normal;font-=
+weight:400;text-align:center;width:14.285714285714%">Did not complete</th><=
+/tr><tr><th style=3D"background:#f2f3fe;color:#0a1551;white-space:normal;fo=
+nt-weight:400;border-top:1px solid #e5e6ef; text-align:left;" nowrap=3D"now=
+rap">Shower Transfer</th><td align=3D"center" style=3D"background:#FFF;colo=
+r:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; "><img src=3D"https=
+://submit.jotform.com/assets/img/submission/check_icon.png" height=3D"12" w=
+idth=3D"12" alt=3D"X" align=3D"top"></td><td align=3D"center" style=3D"back=
+ground:#FFF;color:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; "><=
+/td><td align=3D"center" style=3D"background:#FFF;color:#0A1551;font-weight=
+:400;border-top:1px solid #e5e6ef; "></td><td align=3D"center" style=3D"bac=
+kground:#FFF;color:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; ">=
+</td><td align=3D"center" style=3D"background:#FFF;color:#0A1551;font-weigh=
+t:400;border-top:1px solid #e5e6ef; "></td><td align=3D"center" style=3D"ba=
+ckground:#FFF;color:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; "=
+></td></tr><tr><th style=3D"background:#f2f3fe;color:#0a1551;white-space:no=
+rmal;font-weight:400;border-top:1px solid #e5e6ef; text-align:left;" nowrap=
+=3D"nowrap">Adjust water temperture/ turn on water</th><td align=3D"center"=
+ style=3D"background:#FFF;color:#0A1551;font-weight:400;border-top:1px soli=
+d #e5e6ef; "></td><td align=3D"center" style=3D"background:#FFF;color:#0A15=
+51;font-weight:400;border-top:1px solid #e5e6ef; "><img src=3D"https://subm=
+it.jotform.com/assets/img/submission/check_icon.png" height=3D"12" width=3D=
+"12" alt=3D"X" align=3D"top"></td><td align=3D"center" style=3D"background:=
+#FFF;color:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; "></td><td=
+ align=3D"center" style=3D"background:#FFF;color:#0A1551;font-weight:400;bo=
+rder-top:1px solid #e5e6ef; "></td><td align=3D"center" style=3D"background=
+:#FFF;color:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; "></td><t=
+d align=3D"center" style=3D"background:#FFF;color:#0A1551;font-weight:400;b=
+order-top:1px solid #e5e6ef; "></td></tr><tr><th style=3D"background:#f2f3f=
+e;color:#0a1551;white-space:normal;font-weight:400;border-top:1px solid #e5=
+e6ef; text-align:left;" nowrap=3D"nowrap">Wash lower body</th><td align=3D"=
+center" style=3D"background:#FFF;color:#0A1551;font-weight:400;border-top:1=
+px solid #e5e6ef; "><img src=3D"https://submit.jotform.com/assets/img/submi=
+ssion/check_icon.png" height=3D"12" width=3D"12" alt=3D"X" align=3D"top"></=
+td><td align=3D"center" style=3D"background:#FFF;color:#0A1551;font-weight:=
+400;border-top:1px solid #e5e6ef; "></td><td align=3D"center" style=3D"back=
+ground:#FFF;color:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; "><=
+/td><td align=3D"center" style=3D"background:#FFF;color:#0A1551;font-weight=
+:400;border-top:1px solid #e5e6ef; "></td><td align=3D"center" style=3D"bac=
+kground:#FFF;color:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; ">=
+</td><td align=3D"center" style=3D"background:#FFF;color:#0A1551;font-weigh=
+t:400;border-top:1px solid #e5e6ef; "></td></tr><tr><th style=3D"background=
+:#f2f3fe;color:#0a1551;white-space:normal;font-weight:400;border-top:1px so=
+lid #e5e6ef; text-align:left;" nowrap=3D"nowrap">Wash upper body</th><td al=
+ign=3D"center" style=3D"background:#FFF;color:#0A1551;font-weight:400;borde=
+r-top:1px solid #e5e6ef; "><img src=3D"https://submit.jotform.com/assets/im=
+g/submission/check_icon.png" height=3D"12" width=3D"12" alt=3D"X" align=3D"=
+top"></td><td align=3D"center" style=3D"background:#FFF;color:#0A1551;font-=
+weight:400;border-top:1px solid #e5e6ef; "></td><td align=3D"center" style=
+=3D"background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid #e5e=
+6ef; "></td><td align=3D"center" style=3D"background:#FFF;color:#0A1551;fon=
+t-weight:400;border-top:1px solid #e5e6ef; "></td><td align=3D"center" styl=
+e=3D"background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid #e5=
+e6ef; "></td><td align=3D"center" style=3D"background:#FFF;color:#0A1551;fo=
+nt-weight:400;border-top:1px solid #e5e6ef; "></td></tr><tr><th style=3D"ba=
+ckground:#f2f3fe;color:#0a1551;white-space:normal;font-weight:400;border-to=
+p:1px solid #e5e6ef; text-align:left;" nowrap=3D"nowrap">Wash hair</th><td =
+align=3D"center" style=3D"background:#FFF;color:#0A1551;font-weight:400;bor=
+der-top:1px solid #e5e6ef; "></td><td align=3D"center" style=3D"background:=
+#FFF;color:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; "></td><td=
+ align=3D"center" style=3D"background:#FFF;color:#0A1551;font-weight:400;bo=
+rder-top:1px solid #e5e6ef; "></td><td align=3D"center" style=3D"background=
+:#FFF;color:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; "></td><t=
+d align=3D"center" style=3D"background:#FFF;color:#0A1551;font-weight:400;b=
+order-top:1px solid #e5e6ef; "></td><td align=3D"center" style=3D"backgroun=
+d:#FFF;color:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; "><img s=
+rc=3D"https://submit.jotform.com/assets/img/submission/check_icon.png" heig=
+ht=3D"12" width=3D"12" alt=3D"X" align=3D"top"></td></tr><tr><th style=3D"b=
+ackground:#f2f3fe;color:#0a1551;white-space:normal;font-weight:400;border-t=
+op:1px solid #e5e6ef; text-align:left;" nowrap=3D"nowrap">Drying self</th><=
+td align=3D"center" style=3D"background:#FFF;color:#0A1551;font-weight:400;=
+border-top:1px solid #e5e6ef; "><img src=3D"https://submit.jotform.com/asse=
+ts/img/submission/check_icon.png" height=3D"12" width=3D"12" alt=3D"X" alig=
+n=3D"top"></td><td align=3D"center" style=3D"background:#FFF;color:#0A1551;=
+font-weight:400;border-top:1px solid #e5e6ef; "></td><td align=3D"center" s=
+tyle=3D"background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid =
+#e5e6ef; "></td><td align=3D"center" style=3D"background:#FFF;color:#0A1551=
+;font-weight:400;border-top:1px solid #e5e6ef; "></td><td align=3D"center" =
+style=3D"background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid=
+ #e5e6ef; "></td><td align=3D"center" style=3D"background:#FFF;color:#0A155=
+1;font-weight:400;border-top:1px solid #e5e6ef; "></td></tr><tr><th style=
+=3D"background:#f2f3fe;color:#0a1551;white-space:normal;font-weight:400;bor=
+der-top:1px solid #e5e6ef; text-align:left;" nowrap=3D"nowrap">Dress upper =
+body<br></th><td align=3D"center" style=3D"background:#FFF;color:#0A1551;fo=
+nt-weight:400;border-top:1px solid #e5e6ef; "><img src=3D"https://submit.jo=
+tform.com/assets/img/submission/check_icon.png" height=3D"12" width=3D"12" =
+alt=3D"X" align=3D"top"></td><td align=3D"center" style=3D"background:#FFF;=
+color:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; "></td><td alig=
+n=3D"center" style=3D"background:#FFF;color:#0A1551;font-weight:400;border-=
+top:1px solid #e5e6ef; "></td><td align=3D"center" style=3D"background:#FFF=
+;color:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; "></td><td ali=
+gn=3D"center" style=3D"background:#FFF;color:#0A1551;font-weight:400;border=
+-top:1px solid #e5e6ef; "></td><td align=3D"center" style=3D"background:#FF=
+F;color:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; "></td></tr><=
+tr><th style=3D"background:#f2f3fe;color:#0a1551;white-space:normal;font-we=
+ight:400;border-top:1px solid #e5e6ef; text-align:left;" nowrap=3D"nowrap">=
+Dress lower body</th><td align=3D"center" style=3D"background:#FFF;color:#0=
+A1551;font-weight:400;border-top:1px solid #e5e6ef; "><img src=3D"https://s=
+ubmit.jotform.com/assets/img/submission/check_icon.png" height=3D"12" width=
+=3D"12" alt=3D"X" align=3D"top"></td><td align=3D"center" style=3D"backgrou=
+nd:#FFF;color:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; "></td>=
+<td align=3D"center" style=3D"background:#FFF;color:#0A1551;font-weight:400=
+;border-top:1px solid #e5e6ef; "></td><td align=3D"center" style=3D"backgro=
+und:#FFF;color:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; "></td=
+><td align=3D"center" style=3D"background:#FFF;color:#0A1551;font-weight:40=
+0;border-top:1px solid #e5e6ef; "></td><td align=3D"center" style=3D"backgr=
+ound:#FFF;color:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; "></t=
+d></tr><tr><th style=3D"background:#f2f3fe;color:#0a1551;white-space:normal=
+;font-weight:400;border-top:1px solid #e5e6ef; text-align:left;" nowrap=3D"=
+nowrap">Brush Teeth</th><td align=3D"center" style=3D"background:#FFF;color=
+:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; "><img src=3D"https:=
+//submit.jotform.com/assets/img/submission/check_icon.png" height=3D"12" wi=
+dth=3D"12" alt=3D"X" align=3D"top"></td><td align=3D"center" style=3D"backg=
+round:#FFF;color:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; "></=
+td><td align=3D"center" style=3D"background:#FFF;color:#0A1551;font-weight:=
+400;border-top:1px solid #e5e6ef; "></td><td align=3D"center" style=3D"back=
+ground:#FFF;color:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; "><=
+/td><td align=3D"center" style=3D"background:#FFF;color:#0A1551;font-weight=
+:400;border-top:1px solid #e5e6ef; "></td><td align=3D"center" style=3D"bac=
+kground:#FFF;color:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; ">=
+</td></tr><tr><th style=3D"background:#f2f3fe;color:#0a1551;white-space:nor=
+mal;font-weight:400;border-top:1px solid #e5e6ef; text-align:left;" nowrap=
+=3D"nowrap">Shave face</th><td align=3D"center" style=3D"background:#FFF;co=
+lor:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; "></td><td align=
+=3D"center" style=3D"background:#FFF;color:#0A1551;font-weight:400;border-t=
+op:1px solid #e5e6ef; "></td><td align=3D"center" style=3D"background:#FFF;=
+color:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; "></td><td alig=
+n=3D"center" style=3D"background:#FFF;color:#0A1551;font-weight:400;border-=
+top:1px solid #e5e6ef; "></td><td align=3D"center" style=3D"background:#FFF=
+;color:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; "></td><td ali=
+gn=3D"center" style=3D"background:#FFF;color:#0A1551;font-weight:400;border=
+-top:1px solid #e5e6ef; "><img src=3D"https://submit.jotform.com/assets/img=
+/submission/check_icon.png" height=3D"12" width=3D"12" alt=3D"X" align=3D"t=
+op"></td></tr><tr><th style=3D"background:#f2f3fe;color:#0a1551;white-space=
+:normal;font-weight:400;border-top:1px solid #e5e6ef; text-align:left;" now=
+rap=3D"nowrap">Nail Care</th><td align=3D"center" style=3D"background:#FFF;=
+color:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; "></td><td alig=
+n=3D"center" style=3D"background:#FFF;color:#0A1551;font-weight:400;border-=
+top:1px solid #e5e6ef; "></td><td align=3D"center" style=3D"background:#FFF=
+;color:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; "></td><td ali=
+gn=3D"center" style=3D"background:#FFF;color:#0A1551;font-weight:400;border=
+-top:1px solid #e5e6ef; "></td><td align=3D"center" style=3D"background:#FF=
+F;color:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; "></td><td al=
+ign=3D"center" style=3D"background:#FFF;color:#0A1551;font-weight:400;borde=
+r-top:1px solid #e5e6ef; "><img src=3D"https://submit.jotform.com/assets/im=
+g/submission/check_icon.png" height=3D"12" width=3D"12" alt=3D"X" align=3D"=
+top"></td></tr><tr><th style=3D"background:#f2f3fe;color:#0a1551;white-spac=
+e:normal;font-weight:400;border-top:1px solid #e5e6ef; text-align:left;" no=
+wrap=3D"nowrap">Deoderoant</th><td align=3D"center" style=3D"background:#FF=
+F;color:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; "></td><td al=
+ign=3D"center" style=3D"background:#FFF;color:#0A1551;font-weight:400;borde=
+r-top:1px solid #e5e6ef; "></td><td align=3D"center" style=3D"background:#F=
+FF;color:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; "></td><td a=
+lign=3D"center" style=3D"background:#FFF;color:#0A1551;font-weight:400;bord=
+er-top:1px solid #e5e6ef; "></td><td align=3D"center" style=3D"background:#=
+FFF;color:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; "></td><td =
+align=3D"center" style=3D"background:#FFF;color:#0A1551;font-weight:400;bor=
+der-top:1px solid #e5e6ef; "><img src=3D"https://submit.jotform.com/assets/=
+img/submission/check_icon.png" height=3D"12" width=3D"12" alt=3D"X" align=
+=3D"top"></td></tr><tr><th style=3D"background:#f2f3fe;color:#0a1551;white-=
+space:normal;font-weight:400;border-top:1px solid #e5e6ef; text-align:left;=
+" nowrap=3D"nowrap">Toileting</th><td align=3D"center" style=3D"background:=
+#FFF;color:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; "><img src=
+=3D"https://submit.jotform.com/assets/img/submission/check_icon.png" height=
+=3D"12" width=3D"12" alt=3D"X" align=3D"top"></td><td align=3D"center" styl=
+e=3D"background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid #e5=
+e6ef; "></td><td align=3D"center" style=3D"background:#FFF;color:#0A1551;fo=
+nt-weight:400;border-top:1px solid #e5e6ef; "></td><td align=3D"center" sty=
+le=3D"background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid #e=
+5e6ef; "></td><td align=3D"center" style=3D"background:#FFF;color:#0A1551;f=
+ont-weight:400;border-top:1px solid #e5e6ef; "></td><td align=3D"center" st=
+yle=3D"background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid #=
+e5e6ef; "></td></tr><tr><th style=3D"background:#f2f3fe;color:#0a1551;white=
+-space:normal;font-weight:400;border-top:1px solid #e5e6ef; text-align:left=
+;" nowrap=3D"nowrap">Wash hands</th><td align=3D"center" style=3D"backgroun=
+d:#FFF;color:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; "><img s=
+rc=3D"https://submit.jotform.com/assets/img/submission/check_icon.png" heig=
+ht=3D"12" width=3D"12" alt=3D"X" align=3D"top"></td><td align=3D"center" st=
+yle=3D"background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid #=
+e5e6ef; "></td><td align=3D"center" style=3D"background:#FFF;color:#0A1551;=
+font-weight:400;border-top:1px solid #e5e6ef; "></td><td align=3D"center" s=
+tyle=3D"background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid =
+#e5e6ef; "></td><td align=3D"center" style=3D"background:#FFF;color:#0A1551=
+;font-weight:400;border-top:1px solid #e5e6ef; "></td><td align=3D"center" =
+style=3D"background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid=
+ #e5e6ef; "></td></tr><tr><th style=3D"background:#f2f3fe;color:#0a1551;whi=
+te-space:normal;font-weight:400;border-top:1px solid #e5e6ef; text-align:le=
+ft;" nowrap=3D"nowrap">Wipe face</th><td align=3D"center" style=3D"backgrou=
+nd:#FFF;color:#0A1551;font-weight:400;border-top:1px solid #e5e6ef; "><img =
+src=3D"https://submit.jotform.com/assets/img/submission/check_icon.png" hei=
+ght=3D"12" width=3D"12" alt=3D"X" align=3D"top"></td><td align=3D"center" s=
+tyle=3D"background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid =
+#e5e6ef; "></td><td align=3D"center" style=3D"background:#FFF;color:#0A1551=
+;font-weight:400;border-top:1px solid #e5e6ef; "></td><td align=3D"center" =
+style=3D"background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid=
+ #e5e6ef; "></td><td align=3D"center" style=3D"background:#FFF;color:#0A155=
+1;font-weight:400;border-top:1px solid #e5e6ef; "></td><td align=3D"center"=
+ style=3D"background:#FFF;color:#0A1551;font-weight:400;border-top:1px soli=
+d #e5e6ef; "></td></tr></table></td></tr><tr id=3D"row_180" class=3D"questi=
+onRow"><td id=3D"question_180" class=3D"questionColumn" style=3D"padding: 1=
+2px 8px 12px 0; color: #6f76a7;" valign=3D"top" width=3D"30%">Did the resid=
+ent seem well/unwell during the shift?</td><td id=3D"value_180" class=3D"va=
+lueColumn" style=3D"padding: 12px 0; color: #0a1551; font-weight: 500;" val=
+ign=3D"top" width=3D"70%">Unwell</td></tr><tr id=3D"row_181" class=3D"quest=
+ionRow"><td id=3D"question_181" class=3D"questionColumn" style=3D"padding: =
+12px 8px 12px 0; color: #6f76a7;" valign=3D"top" width=3D"30%">Symptoms/ Co=
+mments</td><td id=3D"value_181" class=3D"valueColumn" style=3D"padding: 12p=
+x 0; color: #0a1551; font-weight: 500;" valign=3D"top" width=3D"70%">coughi=
+ng quite a lot and blocked up</td></tr><tr id=3D"row_203" class=3D"question=
+Row"><td id=3D"question_203" class=3D"questionColumn" style=3D"padding: 12p=
+x 8px 12px 0; color: #6f76a7;" valign=3D"top" width=3D"30%">Did Will have a=
+ Bowel Movement (BM) during your shift?</td><td id=3D"value_203" class=3D"v=
+alueColumn" style=3D"padding: 12px 0; color: #0a1551; font-weight: 500;" va=
+lign=3D"top" width=3D"70%">Yes</td></tr><tr id=3D"row_279" class=3D"questio=
+nRow"><td id=3D"question_279" class=3D"questionColumn" style=3D"padding: 12=
+px 4px 12px 0; color: #6f76a7;" valign=3D"top" width=3D"30%">Please indicat=
+e time and describe Type if known (refer to chart in bathroom)</td><td id=
+=3D"value_279" class=3D"valueColumn" style=3D"padding: 12px 0; color: #0a15=
+51; font-weight: 500;" width=3D"70%">about 4pm and runny</td></tr><tr id=3D=
+"row_278" class=3D"questionRow"><td id=3D"question_278" class=3D"questionCo=
+lumn" style=3D"padding: 12px 4px 12px 0; color: #6f76a7;" valign=3D"top" wi=
+dth=3D"30%">Did Will refuse to participate in any task on his visual routin=
+e</td><td id=3D"value_278" class=3D"valueColumn" style=3D"padding: 12px 0; =
+color: #0a1551; font-weight: 500;" width=3D"70%">No</td></tr><tr id=3D"row_=
+40" class=3D"questionRow"><td id=3D"question_40" class=3D"questionColumn" s=
+tyle=3D"padding: 12px 8px 12px 0; color: #6f76a7;" valign=3D"top" width=3D"=
+30%">What did the resident choose for their main meal during your shift?</t=
+d><td id=3D"value_40" class=3D"valueColumn" style=3D"padding: 12px 0; color=
+: #0a1551; font-weight: 500;" valign=3D"top" width=3D"70%">spaghetti bologn=
+ese</td></tr><tr id=3D"row_107" class=3D"questionRow"><td id=3D"question_10=
+7" class=3D"questionColumn" style=3D"padding: 12px 8px 12px 0; color: #6f76=
+a7;" valign=3D"top" width=3D"30%">What snacks did the resident choose durin=
+g your shift? Was this outside of regular meal time.</td><td id=3D"value_10=
+7" class=3D"valueColumn" style=3D"padding: 12px 0; color: #0a1551; font-wei=
+ght: 500;" valign=3D"top" width=3D"70%">&quot;blue&quot; potato chips</td><=
+/tr><tr id=3D"row_160" class=3D"questionRow"><td id=3D"question_160" class=
+=3D"questionColumn" style=3D"padding: 12px 8px 12px 0; color: #6f76a7;" val=
+ign=3D"top" width=3D"30%">How did the resident participate in the preparati=
+on of meals?</td><td id=3D"value_160" class=3D"valueColumn" style=3D"paddin=
+g: 12px 0; color: #0a1551; font-weight: 500;" valign=3D"top" width=3D"70%">=
+William chose his afternoon snack and got out everything he needed.<br>
+For dinner, he helped put the spaghetti in boiling water and also tipped th=
+e sauce into the pan.</td></tr><tr id=3D"row_159" class=3D"questionRow"><td=
+ id=3D"question_159" class=3D"questionColumn" style=3D"padding: 12px 8px 12=
+px 0; color: #6f76a7;" valign=3D"top" width=3D"30%">Was the resident's bank=
+ card used on your shift?</td><td id=3D"value_159" class=3D"valueColumn" st=
+yle=3D"padding: 12px 0; color: #0a1551; font-weight: 500;" valign=3D"top" w=
+idth=3D"70%"><table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" style=
+=3D"margin: 0 !important; display: inline-block;"><tr><td style=3D"padding-=
+right: 8px; padding-bottom: 4px;"><table><tr><td style=3D"border-radius: 4p=
+x; color: #0a1551; background: #D0F0FE; font-size: 13px; padding: 6px 12px;=
+ font-weight: 500;">No</td></tr></table></td></tr></table></td></tr><tr id=
+=3D"row_320" class=3D"questionRow"><td id=3D"question_320" class=3D"questio=
+nColumn" style=3D"padding: 12px 4px 12px 0; color: #6F76A7;" valign=3D"top"=
+ width=3D"30%">Did Will have PRN at day program today?</td><td id=3D"value_=
+320" class=3D"valueColumn" style=3D"padding: 12px 0; color: #0A1551; font-w=
+eight: 500;" width=3D"70%">No, he did not have any</td></tr><tr id=3D"row_2=
+83" class=3D"questionRow"><td id=3D"question_283" class=3D"questionColumn" =
+style=3D"padding: 12px 4px 12px 0; color: #6f76a7;" valign=3D"top" width=3D=
+"30%">Did Will require support to manage his emotions or behaviour?</td><td=
+ id=3D"value_283" class=3D"valueColumn" style=3D"padding: 12px 0; color: #0=
+a1551; font-weight: 500;" width=3D"70%">Yes</td></tr><tr id=3D"row_298" cla=
+ss=3D"questionRow"><td id=3D"question_298" class=3D"questionColumn" style=
+=3D"padding: 12px 4px 12px 0; color: #6F76A7;" valign=3D"top" width=3D"30%"=
+>Which behaviour did he display?</td><td id=3D"value_298" class=3D"valueCol=
+umn" style=3D"padding: 12px 0; color: #0A1551; font-weight: 500;" width=3D"=
+70%"><table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" style=3D"margi=
+n: 0 !important; display: inline-block;"><tr><td style=3D"padding-right: 8p=
+x; padding-bottom: 4px;"><table><tr><td style=3D"border-radius: 4px; color:=
+ #0a1551; background: #D0F0FE; font-size: 13px; padding: 6px 12px; font-wei=
+ght: 500;">Hitting his own chin, nose or head</td></tr></table></td></tr></=
+table><table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" style=3D"marg=
+in: 0 !important; display: inline-block;"><tr><td style=3D"padding-right: 8=
+px; padding-bottom: 4px;"><table><tr><td style=3D"border-radius: 4px; color=
+: #0a1551; background: #EDE2FE; font-size: 13px; padding: 6px 12px; font-we=
+ight: 500;">Hitting the wall with his head</td></tr></table></td></tr></tab=
+le></td></tr><tr id=3D"row_308" class=3D"questionRow"><td id=3D"question_30=
+8" class=3D"questionColumn" style=3D"padding: 12px 4px 12px 0; color: #6F76=
+A7;" valign=3D"top" width=3D"30%">In what context did the behaviour occur?<=
+/td><td id=3D"value_308" class=3D"valueColumn" style=3D"padding: 12px 0; co=
+lor: #0A1551; font-weight: 500;" width=3D"70%">When presented with non-pref=
+erred task or meal/object</td></tr><tr id=3D"row_316" class=3D"questionRow"=
+><td id=3D"question_316" class=3D"questionColumn" style=3D"padding: 12px 4p=
+x 12px 0; color: #6F76A7;" valign=3D"top" width=3D"30%">Which strategies we=
+re effective to help Will return to baseline?</td><td id=3D"value_316" clas=
+s=3D"valueColumn" style=3D"padding: 12px 0; color: #0A1551; font-weight: 50=
+0;" width=3D"70%"><table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" s=
+tyle=3D"margin: 0 !important; display: inline-block;"><tr><td style=3D"padd=
+ing-right: 8px; padding-bottom: 4px;"><table><tr><td style=3D"border-radius=
+: 4px; color: #0a1551; background: #D0F0FE; font-size: 13px; padding: 6px 1=
+2px; font-weight: 500;">Reassurance/asked him what was wrong</td></tr></tab=
+le></td></tr></table><table cellspacing=3D"0" cellpadding=3D"0" border=3D"0=
+" style=3D"margin: 0 !important; display: inline-block;"><tr><td style=3D"p=
+adding-right: 8px; padding-bottom: 4px;"><table><tr><td style=3D"border-rad=
+ius: 4px; color: #0a1551; background: #EDE2FE; font-size: 13px; padding: 6p=
+x 12px; font-weight: 500;">Give him personal space.</td></tr></table></td><=
+/tr></table><table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" style=
+=3D"margin: 0 !important; display: inline-block;"><tr><td style=3D"padding-=
+right: 8px; padding-bottom: 4px;"><table><tr><td style=3D"border-radius: 4p=
+x; color: #0a1551; background: #CEDFFF; font-size: 13px; padding: 6px 12px;=
+ font-weight: 500;">Reaffirmed his choice or preference</td></tr></table></=
+td></tr></table><table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" sty=
+le=3D"margin: 0 !important; display: inline-block;"><tr><td style=3D"paddin=
+g-right: 8px; padding-bottom: 4px;"><table><tr><td style=3D"border-radius: =
+4px; color: #0a1551; background: #FFDAF6; font-size: 13px; padding: 6px 12p=
+x; font-weight: 500;">Remind him of rules/expectations/natural consequences=
+ (kick your bed, sore foot, break tv, cannot watch shows etc.)</td></tr></t=
+able></td></tr></table><table cellspacing=3D"0" cellpadding=3D"0" border=3D=
+"0" style=3D"margin: 0 !important; display: inline-block;"><tr><td style=3D=
+"padding-right: 8px; padding-bottom: 4px;"><table><tr><td style=3D"border-r=
+adius: 4px; color: #0a1551; background: #D0F7C3; font-size: 13px; padding: =
+6px 12px; font-weight: 500;">Honoured his decision when he said no to somet=
+hing</td></tr></table></td></tr></table></td></tr><tr id=3D"row_317" class=
+=3D"questionRow"><td id=3D"question_317" class=3D"questionColumn" style=3D"=
+padding: 12px 4px 12px 0; color: #6F76A7;" valign=3D"top" width=3D"30%">Wer=
+e these strategies effective?</td><td id=3D"value_317" class=3D"valueColumn=
+" style=3D"padding: 12px 0; color: #0A1551; font-weight: 500;" width=3D"70%=
+">Yes</td></tr><tr id=3D"row_285" class=3D"questionRow"><td id=3D"question_=
+285" class=3D"questionColumn" style=3D"padding: 12px 4px 12px 0; color: #6f=
+76a7;" valign=3D"top" width=3D"30%">What time did he first become dysregula=
+ted?</td><td id=3D"value_285" class=3D"valueColumn" style=3D"padding: 12px =
+0; color: #0a1551; font-weight: 500;" width=3D"70%">6:30 PM</td></tr><tr id=
+=3D"row_299" class=3D"questionRow"><td id=3D"question_299" class=3D"questio=
+nColumn" style=3D"padding: 12px 4px 12px 0; color: #6F76A7;" valign=3D"top"=
+ width=3D"30%">Did you administer PRN?</td><td id=3D"value_299" class=3D"va=
+lueColumn" style=3D"padding: 12px 0; color: #0A1551; font-weight: 500;" wid=
+th=3D"70%">No</td></tr><tr id=3D"row_294" class=3D"questionRow"><td id=3D"q=
+uestion_294" class=3D"questionColumn" style=3D"padding: 12px 4px 12px 0; co=
+lor: #6F76A7;" valign=3D"top" width=3D"30%">Did will struggle with transiti=
+ons inside the house?</td><td id=3D"value_294" class=3D"valueColumn" style=
+=3D"padding: 12px 0; color: #0A1551; font-weight: 500;" width=3D"70%">No</t=
+d></tr><tr id=3D"row_311" class=3D"questionRow"><td id=3D"question_311" cla=
+ss=3D"questionColumn" style=3D"padding: 12px 4px 12px 0; color: #6F76A7;" v=
+align=3D"top" width=3D"30%">Did will struggle to accept/manage a change, or=
+ if something was unavailable?</td><td id=3D"value_311" class=3D"valueColum=
+n" style=3D"padding: 12px 0; color: #0A1551; font-weight: 500;" width=3D"70=
+%">No</td></tr><tr id=3D"row_119" class=3D"questionRow"><td id=3D"question_=
+119" class=3D"questionColumn" style=3D"padding: 12px 8px 12px 0; color: #6f=
+76a7;" valign=3D"top" width=3D"30%">What goals did Will work towards this s=
+hift? (tick all relevant)</td><td id=3D"value_119" class=3D"valueColumn" st=
+yle=3D"padding: 12px 0; color: #0a1551; font-weight: 500;" valign=3D"top" w=
+idth=3D"70%"><table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" style=
+=3D"margin: 0 !important; display: inline-block;"><tr><td style=3D"padding-=
+right: 8px; padding-bottom: 4px;"><table><tr><td style=3D"border-radius: 4p=
+x; color: #0a1551; background: #D0F0FE; font-size: 13px; padding: 6px 12px;=
+ font-weight: 500;">Spending time in the backyard</td></tr></table></td></t=
+r></table><table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" style=3D"=
+margin: 0 !important; display: inline-block;"><tr><td style=3D"padding-righ=
+t: 8px; padding-bottom: 4px;"><table><tr><td style=3D"border-radius: 4px; c=
+olor: #0a1551; background: #EDE2FE; font-size: 13px; padding: 6px 12px; fon=
+t-weight: 500;">Quality time with staff, engaged in activities.</td></tr></=
+table></td></tr></table></td></tr><tr id=3D"row_195" class=3D"questionRow">=
+<td id=3D"question_195" class=3D"questionColumn" style=3D"padding: 12px 8px=
+ 12px 0; color: #6f76a7;" valign=3D"top" width=3D"30%">Details of the activ=
+ities undertaken?</td><td id=3D"value_195" class=3D"valueColumn" style=3D"p=
+adding: 12px 0; color: #0a1551; font-weight: 500;" valign=3D"top" width=3D"=
+70%">Hanging out washing and helping to prepare dinner</td></tr><tr id=3D"r=
+ow_139" class=3D"questionRow"><td id=3D"question_139" class=3D"questionColu=
+mn" style=3D"padding: 12px 8px 12px 0; color: #6f76a7;" valign=3D"top" widt=
+h=3D"30%">Were there any barriers to working on goals this shift?</td><td i=
+d=3D"value_139" class=3D"valueColumn" style=3D"padding: 12px 0; color: #0a1=
+551; font-weight: 500;" valign=3D"top" width=3D"70%">William was unwell wit=
+h cough and cold symptoms. He ate his first bowl of spaghetti bolognese ver=
+y happily but came back from washing his hands to say he'd had enough. He t=
+hen got a little dysregulated and hit his head against the wall and became =
+a little vocal.<br>
+He took his medication, dimetapp (cough), and mountain chocolate (toblerone=
+) then watched a bit more tv, and soon calmed down.</td></tr><tr id=3D"row_=
+186" class=3D"questionRow"><td id=3D"question_186" class=3D"questionColumn"=
+ style=3D"padding: 12px 8px 12px 0; color: #6f76a7;" valign=3D"top" width=
+=3D"30%">Tips and Suggestions for other goals to work on for next month</td=
+><td id=3D"value_186" class=3D"valueColumn" style=3D"padding: 12px 0; color=
+: #0a1551; font-weight: 500;" valign=3D"top" width=3D"70%">William was happ=
+y although quite sick so staff will notice he's not quite himself.</td></tr=
+><tr id=3D"row_67" class=3D"questionRow"><td id=3D"question_67" class=3D"qu=
+estionColumn" style=3D"padding: 12px 8px 12px 0; color: #6f76a7;" valign=3D=
+"top" width=3D"30%">Select the below shift duties which you completed while=
+ on shift</td><td id=3D"value_67" class=3D"valueColumn" style=3D"padding: 1=
+2px 0; color: #0a1551; font-weight: 500;" valign=3D"top" width=3D"70%"><tab=
+le cellspacing=3D"0" cellpadding=3D"0" border=3D"0" style=3D"margin: 0 !imp=
+ortant; display: inline-block;"><tr><td style=3D"padding-right: 8px; paddin=
+g-bottom: 4px;"><table><tr><td style=3D"border-radius: 4px; color: #0a1551;=
+ background: #D0F0FE; font-size: 13px; padding: 6px 12px; font-weight: 500;=
+">Cleaned &amp; tidied bathroom</td></tr></table></td></tr></table><table c=
+ellspacing=3D"0" cellpadding=3D"0" border=3D"0" style=3D"margin: 0 !importa=
+nt; display: inline-block;"><tr><td style=3D"padding-right: 8px; padding-bo=
+ttom: 4px;"><table><tr><td style=3D"border-radius: 4px; color: #0a1551; bac=
+kground: #EDE2FE; font-size: 13px; padding: 6px 12px; font-weight: 500;">Cl=
+eaned &amp; tidied kitchen</td></tr></table></td></tr></table><table cellsp=
+acing=3D"0" cellpadding=3D"0" border=3D"0" style=3D"margin: 0 !important; d=
+isplay: inline-block;"><tr><td style=3D"padding-right: 8px; padding-bottom:=
+ 4px;"><table><tr><td style=3D"border-radius: 4px; color: #0a1551; backgrou=
+nd: #CEDFFF; font-size: 13px; padding: 6px 12px; font-weight: 500;">Support=
+ed another staff member</td></tr></table></td></tr></table><table cellspaci=
+ng=3D"0" cellpadding=3D"0" border=3D"0" style=3D"margin: 0 !important; disp=
+lay: inline-block;"><tr><td style=3D"padding-right: 8px; padding-bottom: 4p=
+x;"><table><tr><td style=3D"border-radius: 4px; color: #0a1551; background:=
+ #FFDAF6; font-size: 13px; padding: 6px 12px; font-weight: 500;">Folded, hu=
+ng out or collected clothes</td></tr></table></td></tr></table></td></tr><t=
+r id=3D"row_200" class=3D"questionRow"><td id=3D"question_200" class=3D"que=
+stionColumn" style=3D"padding: 12px 8px 12px 0; color: #6f76a7;" valign=3D"=
+top" width=3D"30%">Was the Will involved in jobs around the house?</td><td =
+id=3D"value_200" class=3D"valueColumn" style=3D"padding: 12px 0; color: #0a=
+1551; font-weight: 500;" valign=3D"top" width=3D"70%">Yes</td></tr><tr id=
+=3D"row_201" class=3D"questionRow"><td id=3D"question_201" class=3D"questio=
+nColumn" style=3D"padding: 12px 8px 12px 0; color: #6f76a7;" valign=3D"top"=
+ width=3D"30%">Which tasks/how was Will supported?</td><td id=3D"value_201"=
+ class=3D"valueColumn" style=3D"padding: 12px 0; color: #0a1551; font-weigh=
+t: 500;" valign=3D"top" width=3D"70%">hang out washing and prepare meals</t=
+d></tr><tr id=3D"row_75" class=3D"questionRow"><td id=3D"question_75" class=
+=3D"questionColumn" style=3D"padding: 12px 8px 12px 0; color: #6f76a7;" val=
+ign=3D"top" width=3D"30%">Did any injuries or incidents occur during your s=
+hift?</td><td id=3D"value_75" class=3D"valueColumn" style=3D"padding: 12px =
+0; color: #0a1551; font-weight: 500;" valign=3D"top" width=3D"70%">No</td><=
+/tr><tr id=3D"row_276" class=3D"questionRow"><td id=3D"question_276" class=
+=3D"questionColumn" style=3D"padding: 12px 4px 12px 0; color: #6f76a7;" val=
+ign=3D"top" width=3D"30%">Were there any near misses on this shift? (When W=
+illiam escalated but you were able to calm him down)</td><td id=3D"value_27=
+6" class=3D"valueColumn" style=3D"padding: 12px 0; color: #0a1551; font-wei=
+ght: 500;" width=3D"70%">Yes</td></tr><tr id=3D"row_319" class=3D"questionR=
+ow"><td id=3D"question_319" class=3D"questionColumn" style=3D"padding: 12px=
+ 4px 12px 0; color: #6F76A7;" valign=3D"top" width=3D"30%">If yes, please d=
+escribe here.</td><td id=3D"value_319" class=3D"valueColumn" style=3D"paddi=
+ng: 12px 0; color: #0A1551; font-weight: 500;" width=3D"70%">He ate his fir=
+st bowl of spaghetti bolognese very happily but came back from washing his =
+hands to say he'd had enough. He then got a little dysregulated and hit his=
+ head against the wall and became a little vocal.<br>
+He took his medication, dimetapp (cough), and mountain chocolate (toblerone=
+) then watched a bit more tv, and soon calmed down.</td></tr><tr id=3D"row_=
+74" class=3D"questionRow"><td id=3D"question_74" class=3D"questionColumn" s=
+tyle=3D"padding: 12px 8px 12px 0; color: #6f76a7;" valign=3D"top" width=3D"=
+30%">Were any hazards identified during your shift? (e.g a hazard is anythi=
+ng which might have cause an injury)</td><td id=3D"value_74" class=3D"value=
+Column" style=3D"padding: 12px 0; color: #0a1551; font-weight: 500;" valign=
+=3D"top" width=3D"70%">No</td></tr><tr id=3D"row_205" class=3D"questionRow"=
+><td id=3D"question_205" class=3D"questionColumn" style=3D"padding: 12px 8p=
+x 12px 0; color: #6f76a7;" valign=3D"top" width=3D"30%">Was there any visit=
+ors during this shift?</td><td id=3D"value_205" class=3D"valueColumn" style=
+=3D"padding: 12px 0; color: #0a1551; font-weight: 500;" valign=3D"top" widt=
+h=3D"70%">Yes</td></tr><tr id=3D"row_243" class=3D"questionRow"><td id=3D"q=
+uestion_243" class=3D"questionColumn" style=3D"padding: 12px 8px 12px 0; co=
+lor: #6f76a7;" valign=3D"top" width=3D"30%">Name of visitor and reason for =
+visit:</td><td id=3D"value_243" class=3D"valueColumn" style=3D"padding: 12p=
+x 0; color: #0a1551; font-weight: 500;" valign=3D"top" width=3D"70%">Staff =
+member, Kristal, was on &quot;buddy&quot; shift from 3-7pm.</td></tr><tr id=
+=3D"row_137" class=3D"questionRow"><td id=3D"question_137" class=3D"questio=
+nColumn" style=3D"padding: 12px 8px 12px 0; color: #6f76a7;" valign=3D"top"=
+ width=3D"30%">Any other issues, concerns or successes you would like to sh=
+are?</td><td id=3D"value_137" class=3D"valueColumn" style=3D"padding: 12px =
+0; color: #0a1551; font-weight: 500;" valign=3D"top" width=3D"70%">no</td><=
+/tr><tr id=3D"row_143" class=3D"questionRow"><td id=3D"question_143" class=
+=3D"questionColumn" style=3D"padding: 12px 8px 12px 0; color: #6f76a7;" val=
+ign=3D"top" width=3D"30%">is there anything you need your colleague to foll=
+ow up on next shift or over the next few days?</td><td id=3D"value_143" cla=
+ss=3D"valueColumn" style=3D"padding: 12px 0; color: #0a1551; font-weight: 5=
+00;" valign=3D"top" width=3D"70%"><table cellspacing=3D"0" cellpadding=3D"0=
+" border=3D"0" style=3D"margin: 0 !important; display: inline-block;"><tr><=
+td style=3D"padding-right: 8px; padding-bottom: 4px;"><table><tr><td style=
+=3D"border-radius: 4px; color: #0a1551; background: #D0F0FE; font-size: 13p=
+x; padding: 6px 12px; font-weight: 500;">No</td></tr></table></td></tr></ta=
+ble></td></tr><tr id=3D"row_91" class=3D"questionRow"><td id=3D"question_91=
+" class=3D"questionColumn" style=3D"padding: 12px 8px 12px 0; color: #6f76a=
+7;" valign=3D"top" width=3D"30%">Which of the following (if any) did you fe=
+el due to your shift?</td><td id=3D"value_91" class=3D"valueColumn" style=
+=3D"padding: 12px 0; color: #0a1551; font-weight: 500;" valign=3D"top" widt=
+h=3D"70%"><table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" style=3D"=
+margin: 0 !important; display: inline-block;"><tr><td style=3D"padding-righ=
+t: 8px; padding-bottom: 4px;"><table><tr><td style=3D"border-radius: 4px; c=
+olor: #0a1551; background: #D0F0FE; font-size: 13px; padding: 6px 12px; fon=
+t-weight: 500;">Satisfied</td></tr></table></td></tr></table><table cellspa=
+cing=3D"0" cellpadding=3D"0" border=3D"0" style=3D"margin: 0 !important; di=
+splay: inline-block;"><tr><td style=3D"padding-right: 8px; padding-bottom: =
+4px;"><table><tr><td style=3D"border-radius: 4px; color: #0a1551; backgroun=
+d: #EDE2FE; font-size: 13px; padding: 6px 12px; font-weight: 500;">Proud</t=
+d></tr></table></td></tr></table><table cellspacing=3D"0" cellpadding=3D"0"=
+ border=3D"0" style=3D"margin: 0 !important; display: inline-block;"><tr><t=
+d style=3D"padding-right: 8px; padding-bottom: 4px;"><table><tr><td style=
+=3D"border-radius: 4px; color: #0a1551; background: #CEDFFF; font-size: 13p=
+x; padding: 6px 12px; font-weight: 500;">Appreciated</td></tr></table></td>=
+</tr></table></td></tr></tbody></table></td>
+<td width=3D"36"> </td>
+</tr><tr><td colspan=3D"3" height=3D"24"> </td>
+</tr></tbody></table></td>
+</tr><tr><td class=3D"mobile-padding-fix" style=3D"padding: 0 40px;" align=
+=3D"center">
+<table style=3D"font-family: Helvetica, sans-serif; border-radius: 0 0 4px =
+4px;" border=3D"0" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" bgcol=
+or=3D"#FFFFFF"><tbody><tr><td width=3D"36"> </td>
+<td style=3D"border-top: 1px solid #ECEDF2;" height=3D"20"> </td>
+<td width=3D"36"> </td>
+</tr><tr><td width=3D"36"> </td>
+<td class=3D"forward-text-show" style=3D"display: block; font-size: 13px; t=
+ext-align: center; color: #0a1551;">You can <span style=3D"color: #4573e3;"=
+><a href=3D"https://www.jotform.com/edit/5874286150613190318?utm_source=3De=
+mailfooter&amp;utm_medium=3Demail&amp;utm_term=3D230326772415857&amp;utm_co=
+ntent=3Dedit_submissions&amp;utm_campaign=3Dnotification_email_footer_submi=
+ssion_links&amp;email_type=3Dnotification" style=3D"color: #2160d2;" target=
+=3D"_blank">edit this submission</a></span> and <span style=3D"color: #4573=
+e3;"><a href=3D"https://www.jotform.com/tables/230326772415857?utm_source=
+=3Dsheetsemailfooter&amp;utm_medium=3Demail&amp;utm_term=3D230326772415857&=
+amp;utm_content=3Dview_all_submissions&amp;utm_campaign=3Dnotification_emai=
+l_footer_submission_links" style=3D"color: #2160d2;" target=3D"_blank">view=
+ all your submissions</a></span> easily.</td>
+<td width=3D"36"> </td>
+</tr><tr><td colspan=3D"3" height=3D"20"> </td>
+</tr></tbody></table></td>
+</tr><tr><td height=3D"30"> </td>
+</tr></tbody></table></body></html>
+
+
+--b1=_li15hgJ1Rc9vbFTjZFQ3XTEvWb7F1BmFK95q60HyQ--

@@ -1,0 +1,479 @@
+Received: from MEYPR01MB7151.ausprd01.prod.outlook.com (2603:10c6:220:145::13)
+ by SYBPR01MB8363.ausprd01.prod.outlook.com with HTTPS; Sat, 19 Oct 2024
+ 09:42:27 +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
+ b=oW9eYYxRBcxM09xgAKwVVOXfX1JRcGMaEwvzdohGi4jNpXM/XzE2uPuWPrvBnKmCORMnwyJFc6E/hWaYTATAYOCglfyP9DV9Zio20XVV+7jWGuWi+bmlOfWz1f4OQt480zWKeQs/XqRfHl9jcUmh35T9bN0QAZECoffKB61qhxNg83LEigQIcrAeBfZfylSo8WXYx5lAfk9Eis2E3SW7Ry4JZ1e1cTJGoLJVpEwKtZnJjBWjah2PSEi//vrwaNKnaIU0mwo2bs0+OObq7sJwQWlEPsTaAnve0arDRjUNSJNr38zvY7RAYFyFuc2ITD79uzSyPgKPkGyb2OPiTXhC9A==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=OwOmWPpOXdmJoN9fDPuBamTIwXuz5U8u66mqDidvUtQ=;
+ b=CfWKEecC6WYSyVEaPwocEqDt4Dt+i6n4VahQYiirCA8hQkNpcIdxruLu2Jt59Wi1UqCN1bEuvw94mLOfXaSFYit0zPPt90wA/K5hBqaBzh9QKF7F2HVaioByPhD9QijpQuzJkdFFFcse+tEiCptiMsYPv1oTh2t29fpkgxUPbJTd4S5NqV4gBzE/b21VLatoNoTWC6BfPJSWnYq7hgceOmjbuhBjvcXcBmN2XKFxlhCZHwwZJ5U8KRyZDx09J2vAqmWwFZGOSQI/kq3T6aheRykQnFFd2dNzNipk4M6CSb3z8s3ysSTHWArV/YsznS6KrT3qDauhNh0Yf3+atB+kiA==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 152.160.221.239) smtp.rcpttodomain=mogadoreprojects.com
+ smtp.mailfrom=jotform.com; dmarc=pass (p=reject sp=reject pct=100)
+ action=none header.from=jotform.com; dkim=pass (signature was verified)
+ header.d=jotform.com; arc=pass (0 oda=0 ltdi=0 93)
+Received: from MEWP282CA0155.AUSP282.PROD.OUTLOOK.COM (2603:10c6:220:1d7::10)
+ by MEYPR01MB7151.ausprd01.prod.outlook.com (2603:10c6:220:145::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8069.27; Sat, 19 Oct
+ 2024 09:42:24 +0000
+Received: from ML1PEPF0000F177.ausprd01.prod.outlook.com
+ (2603:10c6:220:1d7:cafe::af) by MEWP282CA0155.outlook.office365.com
+ (2603:10c6:220:1d7::10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8069.26 via Frontend
+ Transport; Sat, 19 Oct 2024 09:42:24 +0000
+Authentication-Results: spf=pass (sender IP is 152.160.221.239)
+ smtp.mailfrom=jotform.com; dkim=pass (signature was verified)
+ header.d=jotform.com;dmarc=pass action=none
+ header.from=jotform.com;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of jotform.com designates
+ 152.160.221.239 as permitted sender) receiver=protection.outlook.com;
+ client-ip=152.160.221.239; helo=pool3-101.formresponse.com; pr=C
+Received: from pool3-101.formresponse.com (152.160.221.239) by
+ ML1PEPF0000F177.mail.protection.outlook.com (10.167.241.68) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.8069.17
+ via Frontend Transport; Sat, 19 Oct 2024 09:42:23 +0000
+Received: from go-workers-sr0h (pool3-98.formresponse.com [152.160.221.161])
+	by pool3-101.formresponse.com (Postfix) with ESMTPSA id 68DBB54069D1;
+	Sat, 19 Oct 2024 09:42:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jotform.com; s=mailv2;
+	t=1729330940;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=OwOmWPpOXdmJoN9fDPuBamTIwXuz5U8u66mqDidvUtQ=;
+	b=4Bwcuw95Fz/ecVpW92oHhcrLyOjhWzSSYVftA3PVR13jD2HxaTPoNCt0bYN17piNwdodpi
+	9juGAIlDWklO3TntaecKQNlwhqHW1gaU1JQVCDoTOD8pTjRgV/Sha3/QZrf86FRfV3mgQv
+	XA5PflV4vjYuOg59XVgjDlYeYI5kMAQRxR5JJ0ZLh1jG/5yQeGAIWvBM/88Xwp7Louc3UB
+	eSyJOzsQCmDLkznXDmeC8nH5XExc9LYGWczve3vjfBta8RUrDpiRwW7E8GHwFy5F42SfZp
+	n3elWIE76gfQmTZICfhoL71yoiYW1frGVe5gtli1kSgu9x5uS3Or1U9yUrvw8Q==
+ARC-Seal: i=1; s=mailv2; d=jotform.com; t=1729330940; a=rsa-sha256;
+	cv=none;
+	b=HBt720geHRJXVmtsxNAfV8rpryaF8nzDaEP7+kjZe8sxmiRF1OcjstyY7rVqcLqWS6o6rH
+	58OeQG8b8VladYDbU4Y/IlOxnibunmHBrMGnzSe4AgXyUFb+ZDtINXoCNFzZtyHPo6bruD
+	LGsKjN1Mm8eolT1RodjAkFS2EAipT7jyCPCJmMsjehzFEnMuc6C3HtAViCBQOY7VXbE8Hc
+	uX+qoxZIY/eK8Y6xLiLSGOcvfpqsrKDrC8HmVKH3YK4V895SQhlLBD//wXQXnJT+ZfaD//
+	KU2T8jNP3tpZ5nHVgPuXnlIuXpmEtGwpN+2qrYWqeq5TitFv4Yrw72/VA4+s7g==
+ARC-Authentication-Results: i=1;
+	pool3-101.formresponse.com;
+	auth=pass smtp.auth=noreply@jotform.com smtp.mailfrom=returns@jotform.com
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=jotform.com;
+	s=mailv2; t=1729330940;
+	h=from:subject:date:message-id:to:mime-version:content-type:
+	 content-transfer-encoding; bh=OwOmWPpOXdmJoN9fDPuBamTIwXuz5U8u66mqDidvUtQ=;
+	b=hbRHIvgBs3sq9X494Op4AomSmdNn1o9H7qDNyX5pXoc5ckUhJ7gle1/EOi9vZ4XsXSC4Q6
+	B8iJbNe+24WwSZtrsBFBgTCKLlvaFaxh66JpffVhEWmJS8pUQZB2C+FrmXEqeYED2eoSn3
+	AMaz/A2N1aqmiG17YAiOxUyoh2cIpkykrbvVb4iZq/80iGS1NGUQgp9RFM6wN37RBsHyTZ
+	sjBA8OAIkWCrUKyN5/kDSH4pxYFgG0RWog7asekc150d1KmbP9jbdl/rJCaqoso3B+GBK7
+	0kLbXa57FXaEMYQQ1UnIBo/umROa92NMIp2xNOmPY4tAmFTjRfKJFw1Iwg3ViQ==
+Date: Sat, 19 Oct 2024 05:42:20 -0400
+To: allie.le.blanc@icloud.com, George.White@mogadoreprojects.com, analise.bauchinger@abilityconsultants.com.au, diana.fraser@silc.coop
+From: Jotform <noreply@jotform.com>
+Subject: Incident Report Notification - Will White
+Message-ID: <mMkIQNyf65f64HxB0g6aWY13znhUE16Fw3EcRqx9Ww@go-workers-sr0h>
+X-Mailer: Jotform Email Services
+Feedback-ID: 223310884767866:notification:jotform
+JotSMTP: true
+Content-Type: multipart/alternative;
+ boundary="b1=_mMkIQNyf65f64HxB0g6aWY13znhUE16Fw3EcRqx9Ww"
+Content-Transfer-Encoding: 8bit
+Return-Path: returns@jotform.com
+X-MS-Exchange-Organization-ExpirationStartTime: 19 Oct 2024 09:42:23.5323
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: 40a0b1d8-b214-4f68-a5a7-08dcf0225597
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 6467e23c-3c28-4e57-9522-9b446015635c:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: ML1PEPF0000F177:EE_|MEYPR01MB7151:EE_|SYBPR01MB8363:EE_
+X-MS-Exchange-Organization-AuthSource: ML1PEPF0000F177.ausprd01.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-Office365-Filtering-Correlation-Id: 40a0b1d8-b214-4f68-a5a7-08dcf0225597
+X-MS-Exchange-Organization-SCL: -1
+X-Microsoft-Antispam: BCL:3;ARA:13230040|6062899009|5082899009|12012899012|3092899012|3072899012|2092899012|5062899012|4092899012|69100299015|13102899012|13012899012|4076899003|8096899003;
+X-Forefront-Antispam-Report: CIP:152.160.221.239;CTRY:US;LANG:en;SCL:-1;SRV:;IPV:NLI;SFV:SFE;H:pool3-101.formresponse.com;PTR:pool3-101.formresponse.com;CAT:NONE;SFS:(13230040)(6062899009)(5082899009)(12012899012)(3092899012)(3072899012)(2092899012)(5062899012)(4092899012)(69100299015)(13102899012)(13012899012)(4076899003)(8096899003);DIR:INB;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Oct 2024 09:42:23.0948
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 40a0b1d8-b214-4f68-a5a7-08dcf0225597
+X-MS-Exchange-CrossTenant-Id: 6467e23c-3c28-4e57-9522-9b446015635c
+X-MS-Exchange-CrossTenant-AuthSource: ML1PEPF0000F177.ausprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MEYPR01MB7151
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:04.0777487
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.8069.009
+X-Microsoft-Antispam-Mailbox-Delivery:
+	wl:1;pcwl:1;ucf:0;jmr:0;auth:0;dest:I;ENG:(910001)(944506478)(944626604)(920097)(811239)(255002)(410001)(930097)(140003);
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?scF2qCaGxAVzvoH6C4B7Jpzmvw5yDG+CLW9HzzuXIB2NnN9ae/uwbgArU3NF?=
+ =?us-ascii?Q?s/BnlPe69qxM3IkeEw1WvhBAPoz5FlMeFkhPEtjnED4A+MlCMOvbI53F8o8g?=
+ =?us-ascii?Q?6DdhuRwTcy1RdjGQCfUboci2517an6/mhK9EU5SL95Qxz3AK8cHb7IfB8lLJ?=
+ =?us-ascii?Q?iI2tnhc2bJ45kSa1WxvUmeMiJa5cbzDW20wW8aJ4XIyx0zVv4SBmC5qknxZu?=
+ =?us-ascii?Q?amfz2ZPXletB142LOJP5oAu3rojggdUQjyR409vsQEc33838RtL28+HVuAfT?=
+ =?us-ascii?Q?OTvGs38/xyZcuEYGdopjuqoDFJg+tri9C0KfhSSauSbXm9goGMfhp3TSoUCb?=
+ =?us-ascii?Q?6ie5y2x02tmW1KjIL2aukGTezftM4kj0j+z18hBL48aU9iYQW7fyzW0+axaZ?=
+ =?us-ascii?Q?5V6nmJhPThX7pS0Lc+eyouzpUq6WWUG/U5fuXBsAu5eTauJvxIVPVH8LLOlk?=
+ =?us-ascii?Q?ToN9GZcz0nx9FvY3wnuJlNhzQ6hUfhik5LKNCLxYjN1HtXPhLBJ+YjN8Hby+?=
+ =?us-ascii?Q?NDrKJnl7SReWjV4pw2aiNLx79AyHN+OEK9PoXRHpgJaDSQZ7ESsoQMgMP6d8?=
+ =?us-ascii?Q?wf0fnTeoYPUvWEYB7eoRL5ZKhGpdRoGfMoXcDOSlVTYMowSp9MoAjelCODpO?=
+ =?us-ascii?Q?IbV7G+TbFStGesXwMtrHSOcl806d8JZZLMkh5XvKVfYXFgir2cRsHJVF6ypc?=
+ =?us-ascii?Q?o/EE8HIHQLVqd4KjC+ee61ERtJFmYv3lB93/pj+69FBy/9Oay5smzcS8swPb?=
+ =?us-ascii?Q?eAaL9FJvM1NcbHtKTifTWvg+0LjsCvthp8h3LWbENfL7F5cwJ9lyUKhjJ6R0?=
+ =?us-ascii?Q?sNr9TQ8SLAkE6aGYuckps8whNROcDwb7N1c0L16SZP8XCYTh+dXgUPiDecNS?=
+ =?us-ascii?Q?kM+3ySrCvY4d/l1nS5txqnxrtc+lb11n4Kyqa35Qc3zigeWW+NJgDe7fTOY3?=
+ =?us-ascii?Q?hKf9RX2YJKSrYaC4jo+Aii1beC5TUmkLScQlYjmYmfX3lZ7CC723zDB7no+G?=
+ =?us-ascii?Q?sbZLFZKo70KjuR2qkk/L6Wdcnc9cKbu/cYDHmwhhIU3713085RT5XwWMR37z?=
+ =?us-ascii?Q?Rbv1E8eQ4TbundZoMF0DEbC2CxPjENSberPoO/FSWuojHl4bSTrBfOj1gGkH?=
+ =?us-ascii?Q?4NnlsLa1xebIYhXGfuswJlHquWpRSD5cSvsbSMhm8QcdXPct65FUHXzm7/MM?=
+ =?us-ascii?Q?9ZlYNiUJm2trnC+88GDgggENPELuGyoISxtjNY9PtPALPG7uIEUkMbi+m+f8?=
+ =?us-ascii?Q?3de/pI/SCovBe/zucC8nzIcL1WjEgl6o5/oGLwjtNk2RrazLQzxQnp/y5q2d?=
+ =?us-ascii?Q?vGB9K6GQo2BIoZatfo73x2sT96s/qF5PXTpBucEPt3dj3dVLp61ivx4s5QwV?=
+ =?us-ascii?Q?gKFRutOnqd9Xw7VON3/0NhDgMNVVoRbUQG4Ps0dD3l97JidDSphTjLKAJJ3C?=
+ =?us-ascii?Q?99OfBy0UKQ+whlzBlP/SqriWyQ/BQyNGWCvZL/j98gSjLIiEtYoYyc7jpkD8?=
+ =?us-ascii?Q?uQVSDUXrQOLf1iI+5MrvMVh0wcOIvSTQ/4zwz0JEHLTyrerR8tjzMVeZelQF?=
+ =?us-ascii?Q?YEmjYDqYFW9UUIS7h3xqgLxX7Sex+k94jPTDBH8jDWYmZ4obb2ifyHwmc05p?=
+ =?us-ascii?Q?HYlZzC1ab7TN7+x3GVAJycVqmXFPkYaJ0NC+s7Ks72RAnM5+5RP9TNHw7Ef2?=
+ =?us-ascii?Q?FfpFvXTQ5hTRIcxid5jLDyP+Tb0LaEBOgIlN4pIxfpBGQaV79KhkSxQ5DRFx?=
+ =?us-ascii?Q?dg8o5pp5kTzLcoSs0BoP42VKghOR3M8SH6tjpLdrLfIDSdTlYaKafkrJ/kd8?=
+ =?us-ascii?Q?VdcEOxJtK/9hbt/7t1FHqqXYz9Y5YC/+sNeRtF7iwSLgXvsVFYPNzqZkroYL?=
+ =?us-ascii?Q?Rj05SvYYrVh4nSz50RSjeKweDdVcM0jLloV2237WCq0M3XW/BKs8KbYBaeQ7?=
+ =?us-ascii?Q?SrrLYOYak7xeJADQD4qNydG43e3yQyeEp8kTwVpcPIHG4yMSfRnL0LETJHaN?=
+ =?us-ascii?Q?go7NbRiw9ynJxYqdscDCoiRWYEk7Nr/D2o+g+FMWAmvaYzM5/FSHHl03IzT1?=
+ =?us-ascii?Q?u/ouyKlzHguExY5ca+OpC6m4GJ0xKA=3D=3D?=
+MIME-Version: 1.0
+
+--b1=_mMkIQNyf65f64HxB0g6aWY13znhUE16Fw3EcRqx9Ww
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+The Hive Incident Report 
+
+
+
+
+
+
+
+
+
+Who is this incident report about?Will WhiteIncident Management StageIncident
+ReportingDate & time you became aware of the incident2024-10-19 5:20 PMDate &
+time of incident (Please complete only if you are aware of the time the incident
+occurred and it is different to the time when you became aware of the
+incident)2024-10-19 5:20 PMHow many staff were present at the time of the
+incident1Who was, or potentially was impacted by the incident? If there was more
+than one person with disability impacted by the incident, a separate form must
+be completed for each participantResidentName of person impacted (This includes
+residents, staff, family and community members)Willliam WhiteWHS: Did the
+incident cause you to feel unsafe, or present a physical or psychological risk
+to you, the resident, or other staff?NoWhat were the circumstances leading up to
+the incident? (What had the resident been doing? How was the participant's mood?
+What were the other resident doing? What were staff doing? How many staff were
+present? What were the likely triggers?)Will was in a good mood, I asked Willo
+to help me collect washing and load washing into the dryer where he was happy to
+do. When we returned Willo went into the lounge to watched TV and I went into
+Willos room to fold his washing and pack it away. I then hear Willo started yo
+be upset by crying. Not sure was triggered him but maybe cause i asked him to
+help with the washing.Describe the incident/ allegation (Please provide all
+details including names of staff, location of incident (e.g which room in the
+House or venue), actions by all involved)Willo started dysregulated in the
+lounge room after helping me collect the washing. i was currently in Willos room
+folding and packing his clothes away when it all started. i enterd the lounge
+room and  Willo was hitting his chin about 5x and crying. He then escalated to
+stomp his feet another 5-7x then hitting his hand against the wall 10x. During
+all this he was still crying. I did offer hugs and gave him reassurance where he
+did calm down but still was crying abit. I offered water but only took a sip. I
+give him space and time but still came around to give him reassurance.Immediate
+action taken (Provide details of the immediate steps taken)reassurance 
+Gave space and time
+Offer water and hugs.Given the behaviour displayed in this incident, what does
+the behaviour support plan say to do?To give Will reassurance and give him time
+and space.Were these strategies effective?YesWould you like more training on the
+behaviour support plan directly from the behaviour support clinician and your
+manager? (If you select yes, an email will be sent to your manager and behaviour
+support clinician.)NoIf not, why not?been trainedWhat could have been
+differently? Suggested action that be can be taken to lower the risk of future
+incidents.Maybe pick up clothes on my own or sit with Will before packing
+clothes away. Type of incident (Tick all that apply)AbscondingWas a restraint
+used on the resident to manage the incident?NoIs there a subject of
+allegation?NoWas there any WitnessesNoName of person completing the formGraeme
+KolomaluRoleSupport Worker
+
+--b1=_mMkIQNyf65f64HxB0g6aWY13znhUE16Fw3EcRqx9Ww
+Content-Type: text/html; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w=
+3.org/TR/REC-html40/loose.dtd"><html><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+><meta name=3D"viewport" content=3D"width=3Ddevice-width"><meta http-equiv=
+=3D"X-UA-Compatible" content=3D"IE=3Dedge"><meta name=3D"x-apple-disable-me=
+ssage-reformatting"><style>
+                    table {
+                        border-spacing: 0 !important;
+                        border-collapse: collapse !important;
+                        margin: 0 auto !important;
+                    }
+                    table, td {
+                        border-spacing: 0 !important;
+                        border-collapse:collapse !important;
+                    }
+                    @media screen and (max-device-width: 700px), screen and=
+ (max-width: 700px) {
+                        .email-container {
+                            width: 100% !important;
+                            margin: auto !important;
+                        }
+                        .mobile-padding-fix {
+                            padding-left: 15px !important;
+                            padding-right: 15px !important;
+                        }
+                    }
+                    @media screen and (max-device-width: 480px), screen and=
+ (max-width: 480px) {
+                        td.questionColumn, td.valueColumn, td.footerCol1, t=
+d.footerCol2 {
+                            display: block !important;
+                            width: 100% !important;
+                        }
+                        td.questionColumn {
+                            padding: 0 !important;
+                        }
+                        td.valueColumn {
+                            padding: 4px 0 16px !important;
+                        }
+                        td.footerCol1, td.footerCol2 {
+                            text-align: center !important;
+                        }
+                        td.footerCol1 {
+                            padding-bottom: 16px
+                        }
+                    }
+                </style></head><body width=3D"100%" style=3D"width: 100%; m=
+argin: 0 auto !important; padding: 0 !important; mso-line-height-rule: exac=
+tly; background-color: #F3F3FE;">
+<table class=3D"email-container body-bg" style=3D"width: 720px; text-align:=
+ center;" border=3D"0" width=3D"720" cellspacing=3D"0" cellpadding=3D"0" bg=
+color=3D"#F3F3FE"><tbody><tr><td height=3D"36"></td>
+</tr><tr><td class=3D"mobile-padding-fix" style=3D"padding: 0 40px;" align=
+=3D"center">
+<table style=3D"width: 100%;" border=3D"0" width=3D"100%" cellspacing=3D"0"=
+ cellpadding=3D"0" bgcolor=3D"#F3F3FE"><tbody><tr><td align=3D"center" heig=
+ht=3D"40"><img style=3D"display: block; height: 40px;" src=3D"https://cdn.j=
+otfor.ms/assets/img/logo2021/jotform-logo.png" alt=3D"Jotform Logo" height=
+=3D"40"></td>
+</tr><tr><td height=3D"28"></td>
+</tr><tr><td style=3D"line-height: 0; font-size: 0; border-radius: 4px 4px =
+0 0;" bgcolor=3D"#FF6100" height=3D"8"></td>
+</tr><tr><td>
+<table style=3D"width: 100%;" border=3D"0" width=3D"100%" cellspacing=3D"0"=
+ cellpadding=3D"0" bgcolor=3D"#FFFFFF"><tbody><tr><td style=3D"line-height:=
+ 0; font-size: 0;" colspan=3D"3" height=3D"16"></td>
+</tr><tr><td width=3D"36"></td>
+<td align=3D"left" valign=3D"middle">
+<h3 style=3D"display: inline-block; vertical-align: middle; margin: 0; font=
+-size: 18px; font-weight: bold; color: #0a1551; font-family: Helvetica, san=
+s-serif;">The Hive Incident Report </h3>
+</td>
+<td width=3D"36"></td>
+</tr><tr><td width=3D"36"></td>
+<td style=3D"border-bottom: 1px solid #ECEDF2; line-height: 0; font-size: 0=
+;" height=3D"16"></td>
+<td width=3D"36"></td>
+</tr></tbody></table></td>
+</tr></tbody></table><table style=3D"width: 100%; border-radius: 0 0 4px 4p=
+x;" border=3D"0" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" bgcolor=
+=3D"#FFFFFF"><tbody><tr><td colspan=3D"3" height=3D"24"></td>
+</tr><tr><td width=3D"36"></td>
+<td align=3D"center">
+<table id=3D"emailFieldsTable" class=3D"mceNonEditable" style=3D"font-size:=
+ 14px; font-family: Helvetica, sans-serif;" border=3D"0" width=3D"100%" cel=
+lspacing=3D"0" cellpadding=3D"5"><tbody id=3D"emailFieldsTableBody"><tr id=
+=3D"row_257" class=3D"questionRow"><td id=3D"question_257" class=3D"questio=
+nColumn" style=3D"padding: 12px 8px 12px 0; color: #6f76a7;" valign=3D"top"=
+ width=3D"30%">Who is this incident report about?</td><td id=3D"value_257" =
+class=3D"valueColumn" style=3D"padding: 12px 0; color: #0a1551; font-weight=
+: 500;" valign=3D"top" width=3D"70%">Will White</td></tr><tr id=3D"row_326"=
+ class=3D"questionRow"><td id=3D"question_326" class=3D"questionColumn" sty=
+le=3D"padding: 12px 4px 12px 0; color: #6f76a7;" valign=3D"top" width=3D"30=
+%">Incident Management Stage</td><td id=3D"value_326" class=3D"valueColumn"=
+ style=3D"padding: 12px 0; color: #0a1551; font-weight: 500;" width=3D"70%"=
+><table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" style=3D"margin: 0=
+ !important; display: inline-block;"><tr><td style=3D"padding-right: 8px; p=
+adding-bottom: 4px;"><table><tr><td style=3D"border-radius: 4px; color: #0a=
+1551; background: #D0F0FE; font-size: 13px; padding: 6px 12px; font-weight:=
+ 500;">Incident Reporting</td></tr></table></td></tr></table></td></tr><tr =
+id=3D"row_5" class=3D"questionRow"><td id=3D"question_5" class=3D"questionC=
+olumn" style=3D"padding: 12px 8px 12px 0; color: #6f76a7;" valign=3D"top" w=
+idth=3D"30%">Date &amp; time you became aware of the incident</td><td id=3D=
+"value_5" class=3D"valueColumn" style=3D"padding: 12px 0; color: #0a1551; f=
+ont-weight: 500;" valign=3D"top" width=3D"70%">2024-10-19 5:20 PM</td></tr>=
+<tr id=3D"row_4" class=3D"questionRow"><td id=3D"question_4" class=3D"quest=
+ionColumn" style=3D"padding: 12px 8px 12px 0; color: #6f76a7;" valign=3D"to=
+p" width=3D"30%">Date &amp; time of incident (Please complete only if you a=
+re aware of the time the incident occurred and it is different to the time =
+when you became aware of the incident)</td><td id=3D"value_4" class=3D"valu=
+eColumn" style=3D"padding: 12px 0; color: #0a1551; font-weight: 500;" valig=
+n=3D"top" width=3D"70%">2024-10-19 5:20 PM</td></tr><tr id=3D"row_32" class=
+=3D"questionRow"><td id=3D"question_32" class=3D"questionColumn" style=3D"p=
+adding: 12px 8px 12px 0; color: #6f76a7;" valign=3D"top" width=3D"30%">How =
+many staff were present at the time of the incident</td><td id=3D"value_32"=
+ class=3D"valueColumn" style=3D"padding: 12px 0; color: #0a1551; font-weigh=
+t: 500;" valign=3D"top" width=3D"70%"><table cellspacing=3D"0" cellpadding=
+=3D"0" border=3D"0" style=3D"margin: 0 !important; display: inline-block;">=
+<tr><td style=3D"padding-right: 8px; padding-bottom: 4px;"><table><tr><td s=
+tyle=3D"border-radius: 4px; color: #0a1551; background: #D0F0FE; font-size:=
+ 13px; padding: 6px 12px; font-weight: 500;">1</td></tr></table></td></tr><=
+/table></td></tr><tr id=3D"row_6" class=3D"questionRow"><td id=3D"question_=
+6" class=3D"questionColumn" style=3D"padding: 12px 8px 12px 0; color: #6f76=
+a7;" valign=3D"top" width=3D"30%">Who was, or potentially was impacted by t=
+he incident? If there was more than one person with disability impacted by =
+the incident, a separate form must be completed for each participant</td><t=
+d id=3D"value_6" class=3D"valueColumn" style=3D"padding: 12px 0; color: #0a=
+1551; font-weight: 500;" valign=3D"top" width=3D"70%"><table cellspacing=3D=
+"0" cellpadding=3D"0" border=3D"0" style=3D"margin: 0 !important; display: =
+inline-block;"><tr><td style=3D"padding-right: 8px; padding-bottom: 4px;"><=
+table><tr><td style=3D"border-radius: 4px; color: #0a1551; background: #D0F=
+0FE; font-size: 13px; padding: 6px 12px; font-weight: 500;">Resident</td></=
+tr></table></td></tr></table></td></tr><tr id=3D"row_87" class=3D"questionR=
+ow"><td id=3D"question_87" class=3D"questionColumn" style=3D"padding: 12px =
+8px 12px 0; color: #6f76a7;" valign=3D"top" width=3D"30%">Name of person im=
+pacted (This includes residents, staff, family and community members)</td><=
+td id=3D"value_87" class=3D"valueColumn" style=3D"padding: 12px 0; color: #=
+0a1551; font-weight: 500;" valign=3D"top" width=3D"70%">Willliam White</td>=
+</tr><tr id=3D"row_379" class=3D"questionRow"><td id=3D"question_379" class=
+=3D"questionColumn" style=3D"padding: 12px 4px 12px 0; color: #6F76A7;" val=
+ign=3D"top" width=3D"30%">WHS: Did the incident cause you to feel unsafe, o=
+r present a physical or psychological risk to you, the resident, or other s=
+taff?</td><td id=3D"value_379" class=3D"valueColumn" style=3D"padding: 12px=
+ 0; color: #0A1551; font-weight: 500;" width=3D"70%">No</td></tr><tr id=3D"=
+row_14" class=3D"questionRow"><td id=3D"question_14" class=3D"questionColum=
+n" style=3D"padding: 12px 8px 12px 0; color: #6f76a7;" valign=3D"top" width=
+=3D"30%">What were the circumstances leading up to the incident? (What had =
+the resident been doing? How was the participant's mood? What were the othe=
+r resident doing? What were staff doing? How many staff were present? What =
+were the likely triggers?)</td><td id=3D"value_14" class=3D"valueColumn" st=
+yle=3D"padding: 12px 0; color: #0a1551; font-weight: 500;" valign=3D"top" w=
+idth=3D"70%">Will was in a good mood, I asked Willo to help me collect wash=
+ing and load washing into the dryer where he was happy to do. When we retur=
+ned Willo went into the lounge to watched TV and I went into Willos room to=
+ fold his washing and pack it away. I then hear Willo started yo be upset b=
+y crying. Not sure was triggered him but maybe cause i asked him to help wi=
+th the washing.</td></tr><tr id=3D"row_12" class=3D"questionRow"><td id=3D"=
+question_12" class=3D"questionColumn" style=3D"padding: 12px 8px 12px 0; co=
+lor: #6f76a7;" valign=3D"top" width=3D"30%">Describe the incident/ allegati=
+on (Please provide all details including names of staff, location of incide=
+nt (e.g which room in the House or venue), actions by all involved)</td><td=
+ id=3D"value_12" class=3D"valueColumn" style=3D"padding: 12px 0; color: #0a=
+1551; font-weight: 500;" valign=3D"top" width=3D"70%">Willo started dysregu=
+lated in the lounge room after helping me collect the washing. i was curren=
+tly in Willos room folding and packing his clothes away when it all started=
+. i enterd the lounge room and &nbsp;Willo was hitting his chin about 5x an=
+d crying. He then escalated to stomp his feet another 5-7x then hitting his=
+ hand against the wall 10x. During all this he was still crying. I did offe=
+r hugs and gave him reassurance where he did calm down but still was crying=
+ abit. I offered water but only took a sip. I give him space and time but s=
+till came around to give him reassurance.</td></tr><tr id=3D"row_151" class=
+=3D"questionRow"><td id=3D"question_151" class=3D"questionColumn" style=3D"=
+padding: 12px 8px 12px 0; color: #6f76a7;" valign=3D"top" width=3D"30%">Imm=
+ediate action taken (Provide details of the immediate steps taken)</td><td =
+id=3D"value_151" class=3D"valueColumn" style=3D"padding: 12px 0; color: #0a=
+1551; font-weight: 500;" valign=3D"top" width=3D"70%">reassurance <br>
+Gave space and time<br>
+Offer water and hugs.</td></tr><tr id=3D"row_353" class=3D"questionRow"><td=
+ id=3D"question_353" class=3D"questionColumn" style=3D"padding: 12px 4px 12=
+px 0; color: #6F76A7;" valign=3D"top" width=3D"30%">Given the behaviour dis=
+played in this incident, what does the behaviour support plan say to do?</t=
+d><td id=3D"value_353" class=3D"valueColumn" style=3D"padding: 12px 0; colo=
+r: #0A1551; font-weight: 500;" width=3D"70%">To give Will reassurance and g=
+ive him time and space.</td></tr><tr id=3D"row_354" class=3D"questionRow"><=
+td id=3D"question_354" class=3D"questionColumn" style=3D"padding: 12px 4px =
+12px 0; color: #6F76A7;" valign=3D"top" width=3D"30%">Were these strategies=
+ effective?</td><td id=3D"value_354" class=3D"valueColumn" style=3D"padding=
+: 12px 0; color: #0A1551; font-weight: 500;" width=3D"70%">Yes</td></tr><tr=
+ id=3D"row_356" class=3D"questionRow"><td id=3D"question_356" class=3D"ques=
+tionColumn" style=3D"padding: 12px 4px 12px 0; color: #6F76A7;" valign=3D"t=
+op" width=3D"30%">Would you like more training on the behaviour support pla=
+n directly from the behaviour support clinician and your manager? (If you s=
+elect yes, an email will be sent to your manager and behaviour support clin=
+ician.)</td><td id=3D"value_356" class=3D"valueColumn" style=3D"padding: 12=
+px 0; color: #0A1551; font-weight: 500;" width=3D"70%">No</td></tr><tr id=
+=3D"row_357" class=3D"questionRow"><td id=3D"question_357" class=3D"questio=
+nColumn" style=3D"padding: 12px 4px 12px 0; color: #6F76A7;" valign=3D"top"=
+ width=3D"30%">If not, why not?</td><td id=3D"value_357" class=3D"valueColu=
+mn" style=3D"padding: 12px 0; color: #0A1551; font-weight: 500;" width=3D"7=
+0%">been trained</td></tr><tr id=3D"row_178" class=3D"questionRow"><td id=
+=3D"question_178" class=3D"questionColumn" style=3D"padding: 12px 8px 12px =
+0; color: #6f76a7;" valign=3D"top" width=3D"30%">What could have been diffe=
+rently? Suggested action that be can be taken to lower the risk of future i=
+ncidents.</td><td id=3D"value_178" class=3D"valueColumn" style=3D"padding: =
+12px 0; color: #0a1551; font-weight: 500;" valign=3D"top" width=3D"70%">May=
+be pick up clothes on my own or sit with Will before packing clothes away. =
+</td></tr><tr id=3D"row_346" class=3D"questionRow"><td id=3D"question_346" =
+class=3D"questionColumn" style=3D"padding: 12px 4px 12px 0; color: #6f76a7;=
+" valign=3D"top" width=3D"30%">Type of incident (Tick all that apply)</td><=
+td id=3D"value_346" class=3D"valueColumn" style=3D"padding: 12px 0; color: =
+#0a1551; font-weight: 500;" width=3D"70%"><table cellspacing=3D"0" cellpadd=
+ing=3D"0" border=3D"0" style=3D"margin: 0 !important; display: inline-block=
+;"><tr><td style=3D"padding-right: 8px; padding-bottom: 4px;"><table><tr><t=
+d style=3D"border-radius: 4px; color: #0a1551; background: #D0F0FE; font-si=
+ze: 13px; padding: 6px 12px; font-weight: 500;">Absconding</td></tr></table=
+></td></tr></table></td></tr><tr id=3D"row_272" class=3D"questionRow"><td i=
+d=3D"question_272" class=3D"questionColumn" style=3D"padding: 12px 8px 12px=
+ 0; color: #6f76a7;" valign=3D"top" width=3D"30%">Was a restraint used on t=
+he resident to manage the incident?</td><td id=3D"value_272" class=3D"value=
+Column" style=3D"padding: 12px 0; color: #0a1551; font-weight: 500;" valign=
+=3D"top" width=3D"70%"><table cellspacing=3D"0" cellpadding=3D"0" border=3D=
+"0" style=3D"margin: 0 !important; display: inline-block;"><tr><td style=3D=
+"padding-right: 8px; padding-bottom: 4px;"><table><tr><td style=3D"border-r=
+adius: 4px; color: #0a1551; background: #D0F0FE; font-size: 13px; padding: =
+6px 12px; font-weight: 500;">No</td></tr></table></td></tr></table></td></t=
+r><tr id=3D"row_198" class=3D"questionRow"><td id=3D"question_198" class=3D=
+"questionColumn" style=3D"padding: 12px 8px 12px 0; color: #6f76a7;" valign=
+=3D"top" width=3D"30%">Is there a subject of allegation?</td><td id=3D"valu=
+e_198" class=3D"valueColumn" style=3D"padding: 12px 0; color: #0a1551; font=
+-weight: 500;" valign=3D"top" width=3D"70%">No</td></tr><tr id=3D"row_289" =
+class=3D"questionRow"><td id=3D"question_289" class=3D"questionColumn" styl=
+e=3D"padding: 12px 8px 12px 0; color: #6f76a7;" valign=3D"top" width=3D"30%=
+">Was there any Witnesses</td><td id=3D"value_289" class=3D"valueColumn" st=
+yle=3D"padding: 12px 0; color: #0a1551; font-weight: 500;" valign=3D"top" w=
+idth=3D"70%">No</td></tr><tr id=3D"row_176" class=3D"questionRow"><td id=3D=
+"question_176" class=3D"questionColumn" style=3D"padding: 12px 8px 12px 0; =
+color: #6f76a7;" valign=3D"top" width=3D"30%">Name of person completing the=
+ form</td><td id=3D"value_176" class=3D"valueColumn" style=3D"padding: 12px=
+ 0; color: #0a1551; font-weight: 500;" valign=3D"top" width=3D"70%">Graeme =
+Kolomalu</td></tr><tr id=3D"row_208" class=3D"questionRow"><td id=3D"questi=
+on_208" class=3D"questionColumn" style=3D"padding: 12px 8px 12px 0; color: =
+#6f76a7;" valign=3D"top" width=3D"30%">Role</td><td id=3D"value_208" class=
+=3D"valueColumn" style=3D"padding: 12px 0; color: #0a1551; font-weight: 500=
+;" valign=3D"top" width=3D"70%"><table cellspacing=3D"0" cellpadding=3D"0" =
+border=3D"0" style=3D"margin: 0 !important; display: inline-block;"><tr><td=
+ style=3D"padding-right: 8px; padding-bottom: 4px;"><table><tr><td style=3D=
+"border-radius: 4px; color: #0a1551; background: #D0F0FE; font-size: 13px; =
+padding: 6px 12px; font-weight: 500;">Support Worker</td></tr></table></td>=
+</tr></table></td></tr></tbody></table></td>
+<td width=3D"36"></td>
+</tr><tr><td colspan=3D"3" height=3D"24"></td>
+</tr></tbody></table></td>
+</tr><tr><td class=3D"mobile-padding-fix" style=3D"padding: 0 40px;" align=
+=3D"center">
+<table style=3D"font-family: Helvetica, sans-serif; border-radius: 0 0 4px =
+4px;" border=3D"0" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" bgcol=
+or=3D"#FFFFFF"><tbody><tr><td width=3D"36"></td>
+<td style=3D"border-top: 1px solid #ECEDF2;" height=3D"20"></td>
+<td width=3D"36"></td>
+</tr><tr><td width=3D"36"></td>
+<td class=3D"forward-text-show" style=3D"display: block; font-size: 13px; t=
+ext-align: center; color: #0a1551;"></td>
+<td width=3D"36"></td>
+</tr><tr><td colspan=3D"3" height=3D"20"></td>
+</tr></tbody></table></td>
+</tr><tr><td height=3D"30"></td>
+</tr></tbody></table></body></html>
+
+
+--b1=_mMkIQNyf65f64HxB0g6aWY13znhUE16Fw3EcRqx9Ww--

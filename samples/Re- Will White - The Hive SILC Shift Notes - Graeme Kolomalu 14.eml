@@ -1,0 +1,576 @@
+Received: from MEYPR01MB7917.ausprd01.prod.outlook.com (2603:10c6:220:17b::9)
+ by SY8PR01MB9137.ausprd01.prod.outlook.com with HTTPS; Mon, 22 Jul 2024
+ 22:26:15 +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
+ b=Pac06QTFm7rNNDG7TbOe7z9kP/Fpi3zZldnlEoCGgMrKYhgSMucQTDETpQAWLI2ajKdTlzPJptBv0z2TxOUjIDLLstujWvjTVTiNHnyb58dE30yVPiN8cvP/0zvalPFre7Dc+16qeKmPQ2Dx1UGRpWrLF0zrknTR0ZFqt4i67X6ZKEcbkjLJIibQah+kzwh2eK1mj9znPnmIkwmvZ0/je6ueHDTrcmDudkZwPa1TrHjh6KluaEUpdWmGFx61+ShP/uMBDBu/udRqZCuM74Gw1i7S28i6u08oxPqX5YADe/qIRwzEUkGzfsPFICeyTwNOX7Pf29szWA51zoLHaBu7PQ==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=+W7x/O3ksSuOOcKIGvApN4PhwKuUgK2UpACHbRuuHIA=;
+ b=AZUB96r7eX1vOEf99QqKxMUQB2lIp3w3hepihcp83Vkz4RqSQjdvOByzBIXwcaU0Sx9i/BBROPCKxcVH1NkOzQ4E62/wDG9AaJqGqwWtnYTQt7xUXql1cGHljcJTi7D2QAZpUyC2LqsvnnYnQ9SQ8g1G/5aVt0gznf7mGwZruas+yeT84/wmjKDrKxgDrbT9D022hRuOtb0zqifYi3hIb9kBiw8BAj59xRjKqJ/QcNQkercIh39LGcteoP3Q2kXNeAq11iJK7Waj6UQYRg0bAS3XEhHR8nW7UiapCVDtoEPE05PQ8zgxvQ8JYKkYlBVMHdaN2599b8Ar+aAdQVvUuw==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 152.160.246.142) smtp.rcpttodomain=mogadoreprojects.com
+ smtp.mailfrom=jotform.com; dmarc=pass (p=reject sp=reject pct=100)
+ action=none header.from=jotform.com; dkim=pass (signature was verified)
+ header.d=jotform.com; arc=pass (0 oda=0 ltdi=0 93)
+Received: from ME0PR01CA0037.ausprd01.prod.outlook.com (2603:10c6:220:210::13)
+ by MEYPR01MB7917.ausprd01.prod.outlook.com (2603:10c6:220:17b::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7784.20; Mon, 22 Jul
+ 2024 22:26:10 +0000
+Received: from ML1PEPF0000F179.ausprd01.prod.outlook.com
+ (2603:10c6:220:210:cafe::f9) by ME0PR01CA0037.outlook.office365.com
+ (2603:10c6:220:210::13) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7784.20 via Frontend
+ Transport; Mon, 22 Jul 2024 22:26:10 +0000
+Authentication-Results: spf=pass (sender IP is 152.160.246.142)
+ smtp.mailfrom=jotform.com; dkim=pass (signature was verified)
+ header.d=jotform.com;dmarc=pass action=none
+ header.from=jotform.com;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of jotform.com designates
+ 152.160.246.142 as permitted sender) receiver=protection.outlook.com;
+ client-ip=152.160.246.142; helo=pool2-199.formresponse.com; pr=C
+Received: from pool2-199.formresponse.com (152.160.246.142) by
+ ML1PEPF0000F179.mail.protection.outlook.com (10.167.241.70) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.7784.11
+ via Frontend Transport; Mon, 22 Jul 2024 22:26:09 +0000
+Received: from go-workers-d4wt (pool2-291.formresponse.com [152.160.246.160])
+	by pool2-199.formresponse.com (Postfix) with ESMTPSA id 70FA665009E1;
+	Mon, 22 Jul 2024 18:26:06 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jotform.com; s=mailv2;
+	t=1721687166;
+	h=from:reply-to:subject:date:message-id:to:mime-version:content-type;
+	bh=+W7x/O3ksSuOOcKIGvApN4PhwKuUgK2UpACHbRuuHIA=;
+	b=AqvJphqExHmfLiKxyAIpY66mbyGHa1UQivRVMMkjMuQcS9aGGwnDBcYD40PmCI8wnS6S4+
+	6ebRG8zltIzsmiqt2lTQLWGbB1YS7YIYi/kcHbaGbOneJ2wZgqPtUOuCi3hwEy0l2gXlKq
+	jorMNzf8qXPFKoYtAiUa0IFKBjB8akt++luJDnkdUxipRyUhsNBRe/fQGeqmzjnkXBrHwy
+	Ub2HEQXxPhcJDw08ZjiIYgMtY4yPMZNQJTdaCSmN6sElqW9mALRdgxbUWD3ZyE3SX0WY4/
+	bMeqPLSTELLWHp8FAdTDBIhN9glnf6gKdDXSlCCD+KcGLBgJrtqgxoCGbjDgMw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=jotform.com;
+	s=mailv2; t=1721687166;
+	h=from:reply-to:subject:date:message-id:to:mime-version:content-type;
+	bh=+W7x/O3ksSuOOcKIGvApN4PhwKuUgK2UpACHbRuuHIA=;
+	b=EGyx9sinpS29UAbGRFNXsHY5ZFXWtO7Z7d9FgXAvCQuWYKiRIh+9eT0HQcGMcQcPVJsl7X
+	vtrveA0yCj/AhTp8OvnlKCIbTXqO5Kl8IhLrXcehismel5jqVG4mPMvWTibPGgrp/kDCBC
+	KDzmnEMo8P6uAllujOR2/gGUeMen+jdenbSbU5Y4uYP0jxNXDl1evK2q218kQl190WScND
+	F9QhoiCUHW2M4i7CRjzvWjS/HQ4D3OKwBXMjKDH24jevzPVr56AY7hTQxoIu41QQ4FJBKD
+	iHZyg7jR3EeMqmURntybaKbAD2B6W3yShX2WsZzFp4rJhWAXZ3a14jytal7ehw==
+ARC-Seal: i=1; s=mailv2; d=jotform.com; t=1721687166; a=rsa-sha256;
+	cv=none;
+	b=kMrc2GNn160aVrn8eW3fsb9eIz9qKg2R/wTU7e321yNLcq4mng1q7tJnkDKhHNZ5UkAp++
+	4dfe19eG2x2gGp65RgZ1ai8be8bFFZNZNhjGP4x0Uf80tWAin/gBZqJB2lGfpLtNW28WGW
+	rgV2G0YJV4uigSrwvTewFmkp6La55c8N0n0nYyT1KbQWVhY9Dc85U6Ua8nZ4ua4Bkcj0n0
+	rpgsGhf/h3+vcCp/IdVszg0grQrp6TeJddsTLPwmwMU25+7s84uuHJYs9VIQB+5FyU/b1V
+	v9gv/E/DeAUQZzIrh9uRVkHrVc6NB/tnWyt1fgXPtBj8Gv+LAuWYURa15uL+RQ==
+ARC-Authentication-Results: i=1;
+	pool2-199.formresponse.com;
+	auth=pass smtp.auth=noreply@jotform.com smtp.mailfrom=returns@jotform.com
+Date: Mon, 22 Jul 2024 18:26:06 -0400
+To: allie.le.blanc@icloud.com, George.White@mogadoreprojects.com, diana.fraser@silc.coop
+From: Jotform <noreply@jotform.com>
+Reply-To: allie.le.blanc@icloud.com, George.White@mogadoreprojects.com, diana.fraser@silc.coop
+Subject: Re: Will White - The Hive SILC Shift Notes - Graeme Kolomalu
+Message-ID: <CSp3LaeyHRYBOSP4EKW4sZGD0t0BPJlC6jNNAyJ5jU@go-workers-d4wt>
+X-Mailer: Jotform Email Services
+X-Related: JotForm User Emails
+Feedback-ID: 230326772415857:notification:jotform
+JotSMTP: true
+Content-Type: text/html; charset=utf-8
+Return-Path: returns@jotform.com
+X-MS-Exchange-Organization-ExpirationStartTime: 22 Jul 2024 22:26:09.7847
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: 11aab982-2914-4b44-1344-08dcaa9d4967
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 6467e23c-3c28-4e57-9522-9b446015635c:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: ML1PEPF0000F179:EE_|MEYPR01MB7917:EE_|SY8PR01MB9137:EE_
+X-MS-Exchange-Organization-AuthSource: ML1PEPF0000F179.ausprd01.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-Office365-Filtering-Correlation-Id: 11aab982-2914-4b44-1344-08dcaa9d4967
+X-MS-Exchange-Organization-SCL: -1
+X-Microsoft-Antispam: BCL:4;ARA:13230040|4092899012|6062899009|3092899012|3072899012|13102899012|2092899012|12012899012|13012899012|5082899009|69100299015|5062899012;
+X-Forefront-Antispam-Report: CIP:152.160.246.142;CTRY:US;LANG:en;SCL:-1;SRV:;IPV:NLI;SFV:SFE;H:pool2-199.formresponse.com;PTR:pool2-199.formresponse.com;CAT:NONE;SFS:(13230040)(4092899012)(6062899009)(3092899012)(3072899012)(13102899012)(2092899012)(12012899012)(13012899012)(5082899009)(69100299015)(5062899012);DIR:INB;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jul 2024 22:26:09.3003
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 11aab982-2914-4b44-1344-08dcaa9d4967
+X-MS-Exchange-CrossTenant-Id: 6467e23c-3c28-4e57-9522-9b446015635c
+X-MS-Exchange-CrossTenant-AuthSource: ML1PEPF0000F179.ausprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MEYPR01MB7917
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:06.0710826
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.7784.015
+X-Microsoft-Antispam-Mailbox-Delivery:
+	wl:1;pcwl:1;ucf:0;jmr:0;auth:0;dest:I;ENG:(910001)(944506478)(944626604)(920097)(811239)(255002)(410001)(930097)(140003);
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?dUx6aGlEK0xtenhYekw0NUVXMVdQZ2ZnVTluM2h1L0diQWRXWGFzRVUwSFVB?=
+ =?utf-8?B?SDl0K3V1SXEreGJqUmFRNExZbjloVWdjN1FxTURGbnlsN3ZqVGZTaFM3VWFK?=
+ =?utf-8?B?UWQ4cWg5M05yUXNXSkE3VnBSc2pRb0NLR0hwMnZTcHZXT2MrWnpHR2hwY25L?=
+ =?utf-8?B?alVBSnpYdlBNSjZ0c1E0cktFc01DWC8wYzQzb0JzSGlMS2oyYmh4ZjNlRUgv?=
+ =?utf-8?B?a3I2OHl0TWZtcFNKVnp1QkQxaGxETGdteU9VclFURndTNHRkR3l0cE9yQVhU?=
+ =?utf-8?B?WkZmSitzak1YL0lhcENRY0NIZE9vNjNXNEFNY2tWdHI2cTI5Umh2eUpRQlhV?=
+ =?utf-8?B?RnRzeFpvQVB4KzdKbVVONFpYRVBKWjRKY0JrSWJqdyt4a0IzOThxMjdnUVc3?=
+ =?utf-8?B?NWVSMU50bTZ4TnlTbk5ZRm1Hc0x2ek9OaFhVMVAwdTJXSk1QM25LQXJRVHcr?=
+ =?utf-8?B?SnBNMW1yMnZuejQ4d2YvSExGbEI3ck9lMkhVcG9iOXhPYkRZbUp2QXkxNU9P?=
+ =?utf-8?B?cFpKZndIWkkwd0g1L1FIQUxmRGZVcU9XclRZa3VrZ0hmMjVUWTNEK1lkMlB6?=
+ =?utf-8?B?ek11S3p1MElpVjYvelhoL0NCcytnWFJkQjF2Ymt6ckZqODZYRW5aU1NXUlRj?=
+ =?utf-8?B?VEhWUFdId2N1TEtPeTJLMDZ1WGNKSlhGUVVpakQwRjVycFZqVkRDU0d0RlZR?=
+ =?utf-8?B?cDk5Ny8yMjhZZGk2VDJHb1RnVVFhZHNFZHZ6cUsyOE01NFVDbzBMMTUzeVZ5?=
+ =?utf-8?B?c0sxMmxBTzhqajJmZ1dBckN2dWxVS1BJeEdQRUpqWnV4U3c3S010VDdhenJK?=
+ =?utf-8?B?T1RqdW55MlJubkFFOXJiak5WY3VWRlVCWmtDaXVEY1VXWUJubEd6MlNhUWdY?=
+ =?utf-8?B?VCtlZkt4WEQ4RjVKaWtHYnJEYWQwcFVSSnhXR2xwRDZMdGFwV1BwdTJBTmRC?=
+ =?utf-8?B?eStKeFFxTmFDWWd5eVY1NDlSUHJSWThQczdVOGFuZkQrU0ltR3RKd0g1VDlB?=
+ =?utf-8?B?TVcwaFhoOVlWL0YxZGpNWnl3VXpVZVFyMXBiYWthZDhNMDFpck8xOVA2cFJ3?=
+ =?utf-8?B?UnR6SlpGYWdPRXJmVUVJVW5wVE5hZ3d3bDFHckF0QkN1WXE5MFovSkxWUk5a?=
+ =?utf-8?B?ZmMwdlZ3VHVzSnRqMHVTQ0Q0b0dJVDd2cllhTGsrSHFZWXJuQlNoTzRnUjFG?=
+ =?utf-8?B?SjJHQlJJaDc2ZTB6QVNIZnFOeGpwcjhPQUlkZVUzL3RFZ2l0emtoWjFSZHZv?=
+ =?utf-8?B?MENoQjBNSlpQbWlvRmpUSGRSc3ZqUFJvS0J1a1kvQXFQdEl4eWp5aTNiSmVa?=
+ =?utf-8?B?KzJBSEVnMVRnSlZ6amIxUFB4QmcyaUpNU3dNM2h1Rkg3bWNFZHFNTDNZQzZ6?=
+ =?utf-8?B?bWdGR0Y4amRjN2xWVkZSMXZSZkhvZCs1TXJta0M4WENyWktsNFRKUG4ycDdH?=
+ =?utf-8?B?REl4bm81Uk0vajlRcXg2ckFDS0dVdFc1QlpkUk9ibDVTdkk0Mmp6UjBMRld6?=
+ =?utf-8?B?YnVyWGdPSmxWQ0J0S0xIdDhVSWlTVUJ1cTBDVXBCbUR0Uks0T2lIaTlCUVEz?=
+ =?utf-8?B?L01lNC9UT3hKTEl3VVM5MWJHa3I5V2pVaWJmQitxVWt2TUpIZlNsZ1VKcWlV?=
+ =?utf-8?B?a1VWcHZ4K0kxamF6OEhCV3BvdTdQczRJRGNyTWo5ZkVsUDZzcHh0OXRDeXVC?=
+ =?utf-8?B?WENTZzN5Q3ZsNndBcWpBQjk1bmdRN0dvQWQzY3lucWgwTWpXTDRTcjdOVFBH?=
+ =?utf-8?B?SWQ3anlvMUswTVZadUdmNFI0Y2Via3MyM2NhenZ4NWkrbkRsL2M5eUVyTWg1?=
+ =?utf-8?B?eE9lUUdHclpkYzVIRFhYQnBUTEkxNzlDSlp3TS9GWkM0bWQzdnYzT3JuSUYv?=
+ =?utf-8?B?WkRZdytmdExOdzYzNnBHYXN4VXozZ2NqaW91T2JlUGwvb0dYWmh2TWpXRTNk?=
+ =?utf-8?B?SGRVN1I2YTdBT0lsTjB5eDBpSElQbTl4eGNzWHpaRW5ZQWFBWEhyOTB3Q2Jo?=
+ =?utf-8?B?LzVHYjlYZVd3b3ZES29QY0ZQZWJiZFdBZkI5TEtDZWYxU2EzSDlqT2RmOUVo?=
+ =?utf-8?B?RGU4MW52MjNOMUlhdXgrbVpWR1h0OGs2RHJ6V1ZWNE91WjU1emhZZFY5amxO?=
+ =?utf-8?B?cUtIaUdMK296eGNsL1kzVEIxa0QyZ3RUUjFqVDdORWhSK21xQjgzL1pRRXk5?=
+ =?utf-8?B?N3Brd1pldWZHU0ZtaVJIayszdE1qU1RzemxkR1Y4cm5IUVMwNVhUd0VRL1Q4?=
+ =?utf-8?B?Mis4QXM5RDVRbG8vS29XM3NwOHdOWm0vWTdhKy9OMklLZHJ2Mkdma1owclls?=
+ =?utf-8?B?ZFBHMHhNam5FTjZDVnR5VnpiaVRvb1J3eW9iMEJtQ2xQQ21Bb1o2WEFKRWRK?=
+ =?utf-8?B?aHYvamo3Q2RPZUpTYlVFMWtzY1NwdkhSdDJ5YVBQMjlGK3Nmdmc5L09WbkMz?=
+ =?utf-8?B?cEJPMVIzZTVmb1VQWk5Zemtqdi9vMWpSUEVpa3NlRlZGdXJra0l6bWJCVUE1?=
+ =?utf-8?B?bnVyUUl1L3hVQmUweVIvbXgrbUpVNVgxcElXRkJmRE4yY3ZlaWhIV2JvNURX?=
+ =?utf-8?B?U3VTeW5kelBZSStGUUJOYi92bDNETGcwNEVNaUVMNmJLS0ZveUVNeHZDV094?=
+ =?utf-8?B?ZkhwUW04R0g2L2QzWDh4VmRNQmFWVkJHN0U5UmZZTUJMbFFNTDQrZmJ3dnZn?=
+ =?utf-8?B?TWhBMFpCRkhSVzBITGtrYVpZd3R1Z1VwNTFpOHRtUUw2QlprZ0dTQkc2UUxt?=
+ =?utf-8?Q?vTbsSArl++7O1EBTcwlge0M?=
+MIME-Version: 1.0
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+"http://www.w3.org/TR/REC-html40/loose.dtd"><html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="x-apple-disable-message-reformatting"><style>
+                    table {
+                        border-spacing: 0 !important;
+                        border-collapse: collapse !important;
+                        margin: 0 auto !important;
+                    }
+                    table, td {
+                        border-spacing: 0 !important;
+                        border-collapse:collapse !important;
+                    }
+                    @media screen and (max-device-width: 700px), screen and
+(max-width: 700px) {
+                        .email-container {
+                            width: 100% !important;
+                            margin: auto !important;
+                        }
+                        .mobile-padding-fix {
+                            padding-left: 15px !important;
+                            padding-right: 15px !important;
+                        }
+                    }
+                    @media screen and (max-device-width: 480px), screen and
+(max-width: 480px) {
+                        td.questionColumn, td.valueColumn, td.footerCol1,
+td.footerCol2 {
+                            display: block !important;
+                            width: 100% !important;
+                        }
+                        td.questionColumn {
+                            padding: 0 !important;
+                        }
+                        td.valueColumn {
+                            padding: 4px 0 16px !important;
+                        }
+                        td.footerCol1, td.footerCol2 {
+                            text-align: center !important;
+                        }
+                        td.footerCol1 {
+                            padding-bottom: 16px
+                        }
+                    }
+                </style></head><body width="100%" style="width: 100%; margin: 0 auto !important; padding: 0 !important;
+mso-line-height-rule: exactly; background-color: #F3F3FE;">
+<table class="email-container body-bg" style="width: 720px; text-align: center;" border="0" width="720" cellspacing="0" cellpadding="0" bgcolor="#F3F3FE"><tbody><tr><td height="36"></td>
+</tr><tr><td class="mobile-padding-fix" style="padding: 0 40px;" align="center">
+<table style="width: 100%;" border="0" width="100%" cellspacing="0" cellpadding="0" bgcolor="#F3F3FE"><tbody><tr><td align="center" height="40"><img style="display: block; height: 40px;" src="https://cdn.jotfor.ms/assets/img/logo2021/jotform-logo.png" alt="Jotform
+Logo" height="40"></td>
+</tr><tr><td height="28"></td>
+</tr><tr><td style="line-height: 0; font-size: 0; border-radius: 4px 4px 0 0;" bgcolor="#FF6100" height="8"></td>
+</tr><tr><td>
+<table style="width: 100%;" border="0" width="100%" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF"><tbody><tr><td style="line-height: 0;
+font-size: 0;" colspan="3" height="16"></td>
+</tr><tr><td width="36"></td>
+<td align="left" valign="middle">
+<h3 style="display: inline-block; vertical-align: middle; margin: 0; font-size:
+18px; font-weight: bold; color: #0a1551; font-family: Helvetica,
+sans-serif;">Will White - The Hive SILC Shift Notes</h3>
+</td>
+<td width="36"></td>
+</tr><tr><td width="36"></td>
+<td style="border-bottom: 1px solid #ECEDF2; line-height: 0; font-size: 0;" height="16"></td>
+<td width="36"></td>
+</tr></tbody></table></td>
+</tr></tbody></table><table style="width: 100%; border-radius: 0 0 4px 4px;" border="0" width="100%" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF"><tbody><tr><td colspan="3" height="24"></td>
+</tr><tr><td width="36"></td>
+<td align="center">
+<table id="emailFieldsTable" class="mceNonEditable" style="font-size: 14px;
+font-family: Helvetica, sans-serif;" border="0" width="100%" cellspacing="0" cellpadding="5"><tbody id="emailFieldsTableBody"><tr id="row_104" class="questionRow"><td id="question_104" class="questionColumn" style="padding:
+12px 8px 12px 0; color: #6f76a7;" valign="top" width="30%">Who is this report
+about?</td><td id="value_104" class="valueColumn" style="padding: 12px 0; color:
+#0a1551; font-weight: 500;" valign="top" width="70%"><table cellspacing="0" cellpadding="0" border="0" style="margin: 0 !important; display:
+inline-block;"><tr><td style="padding-right: 8px; padding-bottom:
+4px;"><table><tr><td style="border-radius: 4px; color: #0a1551; background:
+#D0F0FE; font-size: 13px; padding: 6px 12px; font-weight: 500;">Will
+White</td></tr></table></td></tr></table></td></tr><tr id="row_3" class="questionRow"><td id="question_3" class="questionColumn" style="padding:
+12px 8px 12px 0; color: #6f76a7;" valign="top" width="30%">Shift date (date your
+shift ended)</td><td id="value_3" class="valueColumn" style="padding: 12px 0;
+color: #0a1551; font-weight: 500;" valign="top" width="70%">2024/07/22</td></tr><tr id="row_105" class="questionRow"><td id="question_105" class="questionColumn" style="padding: 12px 8px 12px 0; color:
+#6f76a7;" valign="top" width="30%">What day of the week is it?</td><td id="value_105" class="valueColumn" style="padding: 12px 0; color: #0a1551;
+font-weight: 500;" valign="top" width="70%"><table cellspacing="0" cellpadding="0" border="0" style="margin: 0 !important; display:
+inline-block;"><tr><td style="padding-right: 8px; padding-bottom:
+4px;"><table><tr><td style="border-radius: 4px; color: #0a1551; background:
+#D0F0FE; font-size: 13px; padding: 6px 12px; font-weight:
+500;">Monday</td></tr></table></td></tr></table></td></tr><tr id="row_240" class="questionRow"><td id="question_240" class="questionColumn" style="padding:
+12px 8px 12px 0; color: #6f76a7;" valign="top" width="30%">Which shift are you
+reporting on?</td><td id="value_240" class="valueColumn" style="padding: 12px 0;
+color: #0a1551; font-weight: 500;" valign="top" width="70%">Afternoon
+(3pm-10pm)</td></tr><tr id="row_35" class="questionRow"><td id="question_35" class="questionColumn" style="padding: 12px 8px 12px 0; color: #6f76a7;" valign="top" width="30%">This report was prepared by</td><td id="value_35" class="valueColumn" style="padding: 12px 0; color: #0a1551; font-weight: 500;" valign="top" width="70%">Graeme Kolomalu</td></tr><tr id="row_290" class="questionRow"><td id="question_290" class="questionColumn" style="padding:
+12px 4px 12px 0; color: #6F76A7;" valign="top" width="30%">Did will leave the
+home to access the outside of the home?</td><td id="value_290" class="valueColumn" style="padding: 12px 0; color: #0A1551; font-weight: 500;" width="70%">No</td></tr><tr id="row_216" class="questionRow"><td id="question_216" class="questionColumn" style="padding: 12px 8px 12px 0; color:
+#6f76a7;" valign="top" width="30%">Did the resident attend an
+appointment</td><td id="value_216" class="valueColumn" style="padding: 12px 0;
+color: #0a1551; font-weight: 500;" valign="top" width="70%">No</td></tr><tr id="row_280" class="questionRow"><td id="question_280" class="questionColumn" style="padding: 12px 4px 12px 0; color: #6f76a7;" valign="top" width="30%">Did
+you use the House Vehicle today?</td><td id="value_280" class="valueColumn" style="padding: 12px 0; color: #0a1551; font-weight: 500;" width="70%">No</td></tr><tr id="row_287" class="questionRow"><td id="question_287" class="questionColumn" style="padding: 12px 4px 12px 0; color:
+#6f76a7;" valign="top" width="30%">If yes, please enter start and end kms on
+Vehicle Log</td><td id="value_287" class="valueColumn" style="padding: 12px 0;
+color: #0a1551; font-weight: 500;" width="70%">0</td></tr><tr id="row_291" class="questionRow"><td id="question_291" class="questionColumn" style="padding:
+12px 4px 12px 0; color: #6F76A7;" valign="top" width="30%">Did you provide
+personal care to Will?</td><td id="value_291" class="valueColumn" style="padding: 12px 0; color: #0A1551; font-weight: 500;" width="70%">Yes</td></tr><tr id="row_263" class="questionRow"><td id="question_263" class="questionColumn" style="padding: 12px 8px 12px 0; color:
+#6f76a7;" valign="top" width="30%">Did you notice any marks, bruises, cuts,
+burns, rashes, scabs or other injuries?</td><td id="value_263" class="valueColumn" style="padding: 12px 0; color: #0a1551; font-weight: 500;" valign="top" width="70%"><table cellspacing="0" cellpadding="0" border="0" style="margin: 0 !important; display: inline-block;"><tr><td style="padding-right: 8px; padding-bottom: 4px;"><table><tr><td style="border-radius: 4px; color: #0a1551; background: #D0F0FE; font-size: 13px;
+padding: 6px 12px; font-weight:
+500;">No</td></tr></table></td></tr></table></td></tr><tr id="row_272" class="questionRow"><td id="question_272" class="questionColumn" style="padding:
+12px 8px 12px 0; color: #6f76a7;" valign="top" width="30%">Self - Care
+Routine</td><td id="value_272" class="valueColumn" style="padding: 12px 0;
+color: #0a1551; font-weight: 500;" valign="top" width="70%"><table summary="" cellpadding="6" cellspacing="0" border="0" style="border-collapse:collapse;
+border-radius:6px; overflow: hidden; display: inline-block; border: 1px solid
+#e5e6ef; border-radius: 4px;"><tr><th style="background:#f2f3fe;">&nbsp;</th><th style="background:#f2f3fe;color:#0a1551;white-space:normal;font-weight:400;text-align:center;width:14.285714285714%">Fully
+Independent</th><th style="background:#f2f3fe;color:#0a1551;white-space:normal;font-weight:400;text-align:center;width:14.285714285714%">Set
+up assistance</th><th style="background:#f2f3fe;color:#0a1551;white-space:normal;font-weight:400;text-align:center;width:14.285714285714%">Verbal
+prompting</th><th style="background:#f2f3fe;color:#0a1551;white-space:normal;font-weight:400;text-align:center;width:14.285714285714%">Visual
+prompting<br></th><th style="background:#f2f3fe;color:#0a1551;white-space:normal;font-weight:400;text-align:center;width:14.285714285714%">Physical
+assistance</th><th style="background:#f2f3fe;color:#0a1551;white-space:normal;font-weight:400;text-align:center;width:14.285714285714%">Did
+not complete</th></tr><tr><th style="background:#f2f3fe;color:#0a1551;white-space:normal;font-weight:400;border-top:1px
+solid #e5e6ef; text-align:left;" nowrap="nowrap">Shower Transfer</th><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "><img src="https://submit.jotform.com/assets/img/submission/check_icon.png" height="12" width="12" alt="X" align="top"></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td></tr><tr><th style="background:#f2f3fe;color:#0a1551;white-space:normal;font-weight:400;border-top:1px
+solid #e5e6ef; text-align:left;" nowrap="nowrap">Adjust water temperture/ turn
+on water</th><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "><img src="https://submit.jotform.com/assets/img/submission/check_icon.png" height="12" width="12" alt="X" align="top"></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td></tr><tr><th style="background:#f2f3fe;color:#0a1551;white-space:normal;font-weight:400;border-top:1px
+solid #e5e6ef; text-align:left;" nowrap="nowrap">Wash lower body</th><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "><img src="https://submit.jotform.com/assets/img/submission/check_icon.png" height="12" width="12" alt="X" align="top"></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td></tr><tr><th style="background:#f2f3fe;color:#0a1551;white-space:normal;font-weight:400;border-top:1px
+solid #e5e6ef; text-align:left;" nowrap="nowrap">Wash upper body</th><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "><img src="https://submit.jotform.com/assets/img/submission/check_icon.png" height="12" width="12" alt="X" align="top"></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td></tr><tr><th style="background:#f2f3fe;color:#0a1551;white-space:normal;font-weight:400;border-top:1px
+solid #e5e6ef; text-align:left;" nowrap="nowrap">Wash hair</th><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "><img src="https://submit.jotform.com/assets/img/submission/check_icon.png" height="12" width="12" alt="X" align="top"></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td></tr><tr><th style="background:#f2f3fe;color:#0a1551;white-space:normal;font-weight:400;border-top:1px
+solid #e5e6ef; text-align:left;" nowrap="nowrap">Drying self</th><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "><img src="https://submit.jotform.com/assets/img/submission/check_icon.png" height="12" width="12" alt="X" align="top"></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td></tr><tr><th style="background:#f2f3fe;color:#0a1551;white-space:normal;font-weight:400;border-top:1px
+solid #e5e6ef; text-align:left;" nowrap="nowrap">Dress upper body<br></th><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "><img src="https://submit.jotform.com/assets/img/submission/check_icon.png" height="12" width="12" alt="X" align="top"></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td></tr><tr><th style="background:#f2f3fe;color:#0a1551;white-space:normal;font-weight:400;border-top:1px
+solid #e5e6ef; text-align:left;" nowrap="nowrap">Dress lower body</th><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "><img src="https://submit.jotform.com/assets/img/submission/check_icon.png" height="12" width="12" alt="X" align="top"></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td></tr><tr><th style="background:#f2f3fe;color:#0a1551;white-space:normal;font-weight:400;border-top:1px
+solid #e5e6ef; text-align:left;" nowrap="nowrap">Brush Teeth</th><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "><img src="https://submit.jotform.com/assets/img/submission/check_icon.png" height="12" width="12" alt="X" align="top"></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td></tr><tr><th style="background:#f2f3fe;color:#0a1551;white-space:normal;font-weight:400;border-top:1px
+solid #e5e6ef; text-align:left;" nowrap="nowrap">Shave face</th><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "><img src="https://submit.jotform.com/assets/img/submission/check_icon.png" height="12" width="12" alt="X" align="top"></td></tr><tr><th style="background:#f2f3fe;color:#0a1551;white-space:normal;font-weight:400;border-top:1px
+solid #e5e6ef; text-align:left;" nowrap="nowrap">Nail Care</th><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "><img src="https://submit.jotform.com/assets/img/submission/check_icon.png" height="12" width="12" alt="X" align="top"></td></tr><tr><th style="background:#f2f3fe;color:#0a1551;white-space:normal;font-weight:400;border-top:1px
+solid #e5e6ef; text-align:left;" nowrap="nowrap">Deoderoant</th><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "><img src="https://submit.jotform.com/assets/img/submission/check_icon.png" height="12" width="12" alt="X" align="top"></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td></tr><tr><th style="background:#f2f3fe;color:#0a1551;white-space:normal;font-weight:400;border-top:1px
+solid #e5e6ef; text-align:left;" nowrap="nowrap">Toileting</th><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "><img src="https://submit.jotform.com/assets/img/submission/check_icon.png" height="12" width="12" alt="X" align="top"></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td></tr><tr><th style="background:#f2f3fe;color:#0a1551;white-space:normal;font-weight:400;border-top:1px
+solid #e5e6ef; text-align:left;" nowrap="nowrap">Wash hands</th><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "><img src="https://submit.jotform.com/assets/img/submission/check_icon.png" height="12" width="12" alt="X" align="top"></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td></tr><tr><th style="background:#f2f3fe;color:#0a1551;white-space:normal;font-weight:400;border-top:1px
+solid #e5e6ef; text-align:left;" nowrap="nowrap">Wipe face</th><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "><img src="https://submit.jotform.com/assets/img/submission/check_icon.png" height="12" width="12" alt="X" align="top"></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td><td align="center" style="background:#FFF;color:#0A1551;font-weight:400;border-top:1px solid
+#e5e6ef; "></td></tr></table></td></tr><tr id="row_180" class="questionRow"><td id="question_180" class="questionColumn" style="padding: 12px 8px 12px 0; color:
+#6f76a7;" valign="top" width="30%">Did the resident seem well/unwell during the
+shift?</td><td id="value_180" class="valueColumn" style="padding: 12px 0; color:
+#0a1551; font-weight: 500;" valign="top" width="70%">Well</td></tr><tr id="row_203" class="questionRow"><td id="question_203" class="questionColumn" style="padding: 12px 8px 12px 0; color: #6f76a7;" valign="top" width="30%">Did
+Will have a Bowel Movement (BM) during your shift?</td><td id="value_203" class="valueColumn" style="padding: 12px 0; color: #0a1551; font-weight: 500;" valign="top" width="70%">No</td></tr><tr id="row_278" class="questionRow"><td id="question_278" class="questionColumn" style="padding: 12px 4px 12px 0; color:
+#6f76a7;" valign="top" width="30%">Did Will refuse to participate in any task on
+his visual routine</td><td id="value_278" class="valueColumn" style="padding:
+12px 0; color: #0a1551; font-weight: 500;" width="70%">No</td></tr><tr id="row_40" class="questionRow"><td id="question_40" class="questionColumn" style="padding: 12px 8px 12px 0; color: #6f76a7;" valign="top" width="30%">What
+did the resident choose for their main meal during your shift?</td><td id="value_40" class="valueColumn" style="padding: 12px 0; color: #0a1551;
+font-weight: 500;" valign="top" width="70%">noodles</td></tr><tr id="row_107" class="questionRow"><td id="question_107" class="questionColumn" style="padding:
+12px 8px 12px 0; color: #6f76a7;" valign="top" width="30%">What snacks did the
+resident choose during your shift? Was this outside of regular meal
+time.</td><td id="value_107" class="valueColumn" style="padding: 12px 0; color:
+#0a1551; font-weight: 500;" valign="top" width="70%">chicken drumstiks
+crackers</td></tr><tr id="row_160" class="questionRow"><td id="question_160" class="questionColumn" style="padding: 12px 8px 12px 0; color: #6f76a7;" valign="top" width="30%">How did the resident participate in the preparation of
+meals?</td><td id="value_160" class="valueColumn" style="padding: 12px 0; color:
+#0a1551; font-weight: 500;" valign="top" width="70%">set up table<br>
+boil his water<br>
+cookd his noodles</td></tr><tr id="row_321" class="questionRow"><td id="question_321" class="questionColumn" style="padding: 12px 4px 12px 0; color:
+#6F76A7;" valign="top" width="30%">What time did Will get up and actively start
+his morning routine and require your support, such as having his shower</td><td id="value_321" class="valueColumn" style="padding: 12px 0; color: #0A1551;
+font-weight: 500;" width="70%">10:30 - 11:30 pm</td></tr><tr id="row_159" class="questionRow"><td id="question_159" class="questionColumn" style="padding:
+12px 8px 12px 0; color: #6f76a7;" valign="top" width="30%">Was the resident's
+bank card used on your shift?</td><td id="value_159" class="valueColumn" style="padding: 12px 0; color: #0a1551; font-weight: 500;" valign="top" width="70%"><table cellspacing="0" cellpadding="0" border="0" style="margin: 0
+!important; display: inline-block;"><tr><td style="padding-right: 8px;
+padding-bottom: 4px;"><table><tr><td style="border-radius: 4px; color: #0a1551;
+background: #D0F0FE; font-size: 13px; padding: 6px 12px; font-weight:
+500;">No</td></tr></table></td></tr></table></td></tr><tr id="row_320" class="questionRow"><td id="question_320" class="questionColumn" style="padding:
+12px 4px 12px 0; color: #6F76A7;" valign="top" width="30%">Did Will have PRN at
+day program today?</td><td id="value_320" class="valueColumn" style="padding:
+12px 0; color: #0A1551; font-weight: 500;" width="70%">No, he did not have
+any</td></tr><tr id="row_283" class="questionRow"><td id="question_283" class="questionColumn" style="padding: 12px 4px 12px 0; color: #6f76a7;" valign="top" width="30%">Did Will require support to manage his emotions or
+behaviour?</td><td id="value_283" class="valueColumn" style="padding: 12px 0;
+color: #0a1551; font-weight: 500;" width="70%">Yes</td></tr><tr id="row_298" class="questionRow"><td id="question_298" class="questionColumn" style="padding:
+12px 4px 12px 0; color: #6F76A7;" valign="top" width="30%">Which behaviour did
+he display?</td><td id="value_298" class="valueColumn" style="padding: 12px 0;
+color: #0A1551; font-weight: 500;" width="70%"><table cellspacing="0" cellpadding="0" border="0" style="margin: 0 !important; display:
+inline-block;"><tr><td style="padding-right: 8px; padding-bottom:
+4px;"><table><tr><td style="border-radius: 4px; color: #0a1551; background:
+#D0F0FE; font-size: 13px; padding: 6px 12px; font-weight:
+500;">Vocalising</td></tr></table></td></tr></table><table cellspacing="0" cellpadding="0" border="0" style="margin: 0 !important; display:
+inline-block;"><tr><td style="padding-right: 8px; padding-bottom:
+4px;"><table><tr><td style="border-radius: 4px; color: #0a1551; background:
+#EDE2FE; font-size: 13px; padding: 6px 12px; font-weight:
+500;">Crying</td></tr></table></td></tr></table><table cellspacing="0" cellpadding="0" border="0" style="margin: 0 !important; display:
+inline-block;"><tr><td style="padding-right: 8px; padding-bottom:
+4px;"><table><tr><td style="border-radius: 4px; color: #0a1551; background:
+#CEDFFF; font-size: 13px; padding: 6px 12px; font-weight: 500;">Hitting his own
+chin, nose or head</td></tr></table></td></tr></table><table cellspacing="0" cellpadding="0" border="0" style="margin: 0 !important; display:
+inline-block;"><tr><td style="padding-right: 8px; padding-bottom:
+4px;"><table><tr><td style="border-radius: 4px; color: #0a1551; background:
+#FFDAF6; font-size: 13px; padding: 6px 12px; font-weight: 500;">Hitting the wall
+with his hand</td></tr></table></td></tr></table><table cellspacing="0" cellpadding="0" border="0" style="margin: 0 !important; display:
+inline-block;"><tr><td style="padding-right: 8px; padding-bottom:
+4px;"><table><tr><td style="border-radius: 4px; color: #0a1551; background:
+#D0F7C3; font-size: 13px; padding: 6px 12px; font-weight: 500;">Kicking
+objects/furniture</td></tr></table></td></tr></table><table cellspacing="0" cellpadding="0" border="0" style="margin: 0 !important; display:
+inline-block;"><tr><td style="padding-right: 8px; padding-bottom:
+4px;"><table><tr><td style="border-radius: 4px; color: #0a1551; background:
+#FFDCE5; font-size: 13px; padding: 6px 12px; font-weight: 500;">Hitting the wall
+with his head</td></tr></table></td></tr></table><table cellspacing="0" cellpadding="0" border="0" style="margin: 0 !important; display:
+inline-block;"><tr><td style="padding-right: 8px; padding-bottom:
+4px;"><table><tr><td style="border-radius: 4px; color: #0a1551; background:
+#FFEAB6; font-size: 13px; padding: 6px 12px; font-weight:
+500;">Stomping</td></tr></table></td></tr></table><table cellspacing="0" cellpadding="0" border="0" style="margin: 0 !important; display:
+inline-block;"><tr><td style="padding-right: 8px; padding-bottom:
+4px;"><table><tr><td style="border-radius: 4px; color: #0a1551; background:
+#C2F5E9; font-size: 13px; padding: 6px 12px; font-weight: 500;">Saying no when
+initiating a routine activity</td></tr></table></td></tr></table><table cellspacing="0" cellpadding="0" border="0" style="margin: 0 !important; display:
+inline-block;"><tr><td style="padding-right: 8px; padding-bottom:
+4px;"><table><tr><td style="border-radius: 4px; color: #0a1551; background:
+#FEE2D5; font-size: 13px; padding: 6px 12px; font-weight: 500;">Saying no out of
+context (E.g. no train! No
+train!)</td></tr></table></td></tr></table></td></tr><tr id="row_308" class="questionRow"><td id="question_308" class="questionColumn" style="padding:
+12px 4px 12px 0; color: #6F76A7;" valign="top" width="30%">In what context did
+the behaviour occur?</td><td id="value_308" class="valueColumn" style="padding:
+12px 0; color: #0A1551; font-weight: 500;" width="70%">Staff
+changeover</td></tr><tr id="row_316" class="questionRow"><td id="question_316" class="questionColumn" style="padding: 12px 4px 12px 0; color: #6F76A7;" valign="top" width="30%">Which strategies were effective to help Will return to
+baseline?</td><td id="value_316" class="valueColumn" style="padding: 12px 0;
+color: #0A1551; font-weight: 500;" width="70%"><table cellspacing="0" cellpadding="0" border="0" style="margin: 0 !important; display:
+inline-block;"><tr><td style="padding-right: 8px; padding-bottom:
+4px;"><table><tr><td style="border-radius: 4px; color: #0a1551; background:
+#D0F0FE; font-size: 13px; padding: 6px 12px; font-weight:
+500;">Reassurance/asked him what was
+wrong</td></tr></table></td></tr></table><table cellspacing="0" cellpadding="0" border="0" style="margin: 0 !important; display: inline-block;"><tr><td style="padding-right: 8px; padding-bottom: 4px;"><table><tr><td style="border-radius: 4px; color: #0a1551; background: #EDE2FE; font-size: 13px;
+padding: 6px 12px; font-weight: 500;">Give him personal
+space.</td></tr></table></td></tr></table><table cellspacing="0" cellpadding="0" border="0" style="margin: 0 !important; display: inline-block;"><tr><td style="padding-right: 8px; padding-bottom: 4px;"><table><tr><td style="border-radius: 4px; color: #0a1551; background: #CEDFFF; font-size: 13px;
+padding: 6px 12px; font-weight: 500;">Removed items or hazards (that could be
+thrown)</td></tr></table></td></tr></table><table cellspacing="0" cellpadding="0" border="0" style="margin: 0 !important; display:
+inline-block;"><tr><td style="padding-right: 8px; padding-bottom:
+4px;"><table><tr><td style="border-radius: 4px; color: #0a1551; background:
+#FFDAF6; font-size: 13px; padding: 6px 12px; font-weight: 500;">Honoured his
+decision when he said no to
+something</td></tr></table></td></tr></table></td></tr><tr id="row_317" class="questionRow"><td id="question_317" class="questionColumn" style="padding:
+12px 4px 12px 0; color: #6F76A7;" valign="top" width="30%">Were these strategies
+effective?</td><td id="value_317" class="valueColumn" style="padding: 12px 0;
+color: #0A1551; font-weight: 500;" width="70%">Yes</td></tr><tr id="row_285" class="questionRow"><td id="question_285" class="questionColumn" style="padding:
+12px 4px 12px 0; color: #6f76a7;" valign="top" width="30%">What time did he
+first become dysregulated?</td><td id="value_285" class="valueColumn" style="padding: 12px 0; color: #0a1551; font-weight: 500;" width="70%">4:30
+PM</td></tr><tr id="row_299" class="questionRow"><td id="question_299" class="questionColumn" style="padding: 12px 4px 12px 0; color: #6F76A7;" valign="top" width="30%">Did you administer PRN?</td><td id="value_299" class="valueColumn" style="padding: 12px 0; color: #0A1551; font-weight: 500;" width="70%">Yes</td></tr><tr id="row_300" class="questionRow"><td id="question_300" class="questionColumn" style="padding: 12px 4px 12px 0; color:
+#6F76A7;" valign="top" width="30%">Did he return to baseline after the first
+PRN?</td><td id="value_300" class="valueColumn" style="padding: 12px 0; color:
+#0A1551; font-weight: 500;" width="70%">Yes</td></tr><tr id="row_304" class="questionRow"><td id="question_304" class="questionColumn" style="padding:
+12px 4px 12px 0; color: #6F76A7;" valign="top" width="30%">How long after the
+first PRN did he return to baseline?</td><td id="value_304" class="valueColumn" style="padding: 12px 0; color: #0A1551; font-weight: 500;" width="70%">more than
+30</td></tr><tr id="row_294" class="questionRow"><td id="question_294" class="questionColumn" style="padding: 12px 4px 12px 0; color: #6F76A7;" valign="top" width="30%">Did will struggle with transitions inside the
+house?</td><td id="value_294" class="valueColumn" style="padding: 12px 0; color:
+#0A1551; font-weight: 500;" width="70%">No</td></tr><tr id="row_311" class="questionRow"><td id="question_311" class="questionColumn" style="padding:
+12px 4px 12px 0; color: #6F76A7;" valign="top" width="30%">Did will struggle to
+accept/manage a change, or if something was unavailable?</td><td id="value_311" class="valueColumn" style="padding: 12px 0; color: #0A1551; font-weight: 500;" width="70%">No</td></tr><tr id="row_324" class="questionRow"><td id="question_324" class="questionColumn" style="padding: 12px 4px 12px 0; color:
+#6F76A7;" valign="top" width="30%">Did the resident go to sleep on the evening
+shift?</td><td id="value_324" class="valueColumn" style="padding: 12px 0; color:
+#0A1551; font-weight: 500;" width="70%">Yes</td></tr><tr id="row_325" class="questionRow"><td id="question_325" class="questionColumn" style="padding:
+12px 4px 12px 0; color: #6F76A7;" valign="top" width="30%">What time did the
+resident go to bed?</td><td id="value_325" class="valueColumn" style="padding:
+12px 0; color: #0A1551; font-weight: 500;" width="70%">10:30 - 11:30
+pm</td></tr><tr id="row_119" class="questionRow"><td id="question_119" class="questionColumn" style="padding: 12px 8px 12px 0; color: #6f76a7;" valign="top" width="30%">What goals did Will work towards this shift? (tick all
+relevant)</td><td id="value_119" class="valueColumn" style="padding: 12px 0;
+color: #0a1551; font-weight: 500;" valign="top" width="70%"><table cellspacing="0" cellpadding="0" border="0" style="margin: 0 !important; display:
+inline-block;"><tr><td style="padding-right: 8px; padding-bottom:
+4px;"><table><tr><td style="border-radius: 4px; color: #0a1551; background:
+#D0F0FE; font-size: 13px; padding: 6px 12px; font-weight: 500;">Quality time
+with staff, engaged in
+activities.</td></tr></table></td></tr></table></td></tr><tr id="row_195" class="questionRow"><td id="question_195" class="questionColumn" style="padding:
+12px 8px 12px 0; color: #6f76a7;" valign="top" width="30%">Details of the
+activities undertaken?</td><td id="value_195" class="valueColumn" style="padding: 12px 0; color: #0a1551; font-weight: 500;" valign="top" width="70%">cooked dinner together</td></tr><tr id="row_139" class="questionRow"><td id="question_139" class="questionColumn" style="padding:
+12px 8px 12px 0; color: #6f76a7;" valign="top" width="30%">Were there any
+barriers to working on goals this shift?</td><td id="value_139" class="valueColumn" style="padding: 12px 0; color: #0a1551; font-weight: 500;" valign="top" width="70%">none</td></tr><tr id="row_186" class="questionRow"><td id="question_186" class="questionColumn" style="padding: 12px 8px 12px 0; color:
+#6f76a7;" valign="top" width="30%">Tips and Suggestions for other goals to work
+on for next month</td><td id="value_186" class="valueColumn" style="padding:
+12px 0; color: #0a1551; font-weight: 500;" valign="top" width="70%">none</td></tr><tr id="row_67" class="questionRow"><td id="question_67" class="questionColumn" style="padding: 12px 8px 12px 0; color:
+#6f76a7;" valign="top" width="30%">Select the below shift duties which you
+completed while on shift</td><td id="value_67" class="valueColumn" style="padding: 12px 0; color: #0a1551; font-weight: 500;" valign="top" width="70%"><table cellspacing="0" cellpadding="0" border="0" style="margin: 0
+!important; display: inline-block;"><tr><td style="padding-right: 8px;
+padding-bottom: 4px;"><table><tr><td style="border-radius: 4px; color: #0a1551;
+background: #D0F0FE; font-size: 13px; padding: 6px 12px; font-weight:
+500;">Cleaned &amp; tidied kitchen</td></tr></table></td></tr></table><table cellspacing="0" cellpadding="0" border="0" style="margin: 0 !important; display:
+inline-block;"><tr><td style="padding-right: 8px; padding-bottom:
+4px;"><table><tr><td style="border-radius: 4px; color: #0a1551; background:
+#EDE2FE; font-size: 13px; padding: 6px 12px; font-weight: 500;">Cleaned &amp; tidied
+lounge room</td></tr></table></td></tr></table><table cellspacing="0" cellpadding="0" border="0" style="margin: 0 !important; display:
+inline-block;"><tr><td style="padding-right: 8px; padding-bottom:
+4px;"><table><tr><td style="border-radius: 4px; color: #0a1551; background:
+#CEDFFF; font-size: 13px; padding: 6px 12px; font-weight: 500;">Cleaned &amp; tidied
+carer's room</td></tr></table></td></tr></table><table cellspacing="0" cellpadding="0" border="0" style="margin: 0 !important; display:
+inline-block;"><tr><td style="padding-right: 8px; padding-bottom:
+4px;"><table><tr><td style="border-radius: 4px; color: #0a1551; background:
+#FFDAF6; font-size: 13px; padding: 6px 12px; font-weight: 500;">Empty garbage
+bins</td></tr></table></td></tr></table><table cellspacing="0" cellpadding="0" border="0" style="margin: 0 !important; display: inline-block;"><tr><td style="padding-right: 8px; padding-bottom: 4px;"><table><tr><td style="border-radius: 4px; color: #0a1551; background: #D0F7C3; font-size: 13px;
+padding: 6px 12px; font-weight: 500;">Floors
+swept</td></tr></table></td></tr></table></td></tr><tr id="row_200" class="questionRow"><td id="question_200" class="questionColumn" style="padding:
+12px 8px 12px 0; color: #6f76a7;" valign="top" width="30%">Was the Will involved
+in jobs around the house?</td><td id="value_200" class="valueColumn" style="padding: 12px 0; color: #0a1551; font-weight: 500;" valign="top" width="70%">No</td></tr><tr id="row_75" class="questionRow"><td id="question_75" class="questionColumn" style="padding: 12px 8px 12px 0; color: #6f76a7;" valign="top" width="30%">Did any injuries or incidents occur during your
+shift?</td><td id="value_75" class="valueColumn" style="padding: 12px 0; color:
+#0a1551; font-weight: 500;" valign="top" width="70%">No</td></tr><tr id="row_276" class="questionRow"><td id="question_276" class="questionColumn" style="padding: 12px 4px 12px 0; color: #6f76a7;" valign="top" width="30%">Were
+there any near misses on this shift? (When William escalated but you were able
+to calm him down)</td><td id="value_276" class="valueColumn" style="padding:
+12px 0; color: #0a1551; font-weight: 500;" width="70%">Yes</td></tr><tr id="row_319" class="questionRow"><td id="question_319" class="questionColumn" style="padding: 12px 4px 12px 0; color: #6F76A7;" valign="top" width="30%">If
+yes, please describe here.</td><td id="value_319" class="valueColumn" style="padding: 12px 0; color: #0A1551; font-weight: 500;" width="70%">William
+became dysregulated then escalated and had to PRN him once.</td></tr><tr id="row_74" class="questionRow"><td id="question_74" class="questionColumn" style="padding: 12px 8px 12px 0; color: #6f76a7;" valign="top" width="30%">Were
+any hazards identified during your shift? (e.g a hazard is anything which might
+have cause an injury)</td><td id="value_74" class="valueColumn" style="padding:
+12px 0; color: #0a1551; font-weight: 500;" valign="top" width="70%">No</td></tr><tr id="row_205" class="questionRow"><td id="question_205" class="questionColumn" style="padding: 12px 8px 12px 0; color:
+#6f76a7;" valign="top" width="30%">Was there any visitors during this
+shift?</td><td id="value_205" class="valueColumn" style="padding: 12px 0; color:
+#0a1551; font-weight: 500;" valign="top" width="70%">No</td></tr><tr id="row_137" class="questionRow"><td id="question_137" class="questionColumn" style="padding: 12px 8px 12px 0; color: #6f76a7;" valign="top" width="30%">Any
+other issues, concerns or successes you would like to share?</td><td id="value_137" class="valueColumn" style="padding: 12px 0; color: #0a1551;
+font-weight: 500;" valign="top" width="70%">none</td></tr><tr id="row_143" class="questionRow"><td id="question_143" class="questionColumn" style="padding:
+12px 8px 12px 0; color: #6f76a7;" valign="top" width="30%">is there anything you
+need your colleague to follow up on next shift or over the next few
+days?</td><td id="value_143" class="valueColumn" style="padding: 12px 0; color:
+#0a1551; font-weight: 500;" valign="top" width="70%"><table cellspacing="0" cellpadding="0" border="0" style="margin: 0 !important; display:
+inline-block;"><tr><td style="padding-right: 8px; padding-bottom:
+4px;"><table><tr><td style="border-radius: 4px; color: #0a1551; background:
+#D0F0FE; font-size: 13px; padding: 6px 12px; font-weight:
+500;">No</td></tr></table></td></tr></table></td></tr><tr id="row_91" class="questionRow"><td id="question_91" class="questionColumn" style="padding:
+12px 8px 12px 0; color: #6f76a7;" valign="top" width="30%">Which of the
+following (if any) did you feel due to your shift?</td><td id="value_91" class="valueColumn" style="padding: 12px 0; color: #0a1551; font-weight: 500;" valign="top" width="70%"><table cellspacing="0" cellpadding="0" border="0" style="margin: 0 !important; display: inline-block;"><tr><td style="padding-right: 8px; padding-bottom: 4px;"><table><tr><td style="border-radius: 4px; color: #0a1551; background: #D0F0FE; font-size: 13px;
+padding: 6px 12px; font-weight:
+500;">Appreciated</td></tr></table></td></tr></table></td></tr></tbody></table></td>
+<td width="36"></td>
+</tr><tr><td colspan="3" height="24"></td>
+</tr></tbody></table></td>
+</tr><tr><td class="mobile-padding-fix" style="padding: 0 40px;" align="center">
+<table style="font-family: Helvetica, sans-serif; border-radius: 0 0 4px 4px;" border="0" width="100%" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF"><tbody><tr><td width="36"></td>
+<td style="border-top: 1px solid #ECEDF2;" height="20"></td>
+<td width="36"></td>
+</tr><tr><td width="36"></td>
+<td class="forward-text-show" style="display: block; font-size: 13px;
+text-align: center; color: #0a1551;">You can <span style="color: #4573e3;"><a href="https://www.jotform.com/edit/5974963643719478958?utm_source=emailfooter&amp;utm_medium=email&amp;utm_term=230326772415857&amp;utm_content=edit_submissions&amp;utm_campaign=notification_email_footer_submission_links&amp;email_type=notification" style="color: #2160d2;" target="_blank">edit this submission</a></span> and
+<span style="color: #4573e3;"><a href="https://www.jotform.com/tables/230326772415857?utm_source=sheetsemailfooter&amp;utm_medium=email&amp;utm_term=230326772415857&amp;utm_content=view_all_submissions&amp;utm_campaign=notification_email_footer_submission_links" style="color: #2160d2;" target="_blank">view all your submissions</a></span>
+easily.</td>
+<td width="36"></td>
+</tr><tr><td colspan="3" height="20"></td>
+</tr></tbody></table></td>
+</tr><tr><td height="30"></td>
+</tr></tbody></table></body></html>
+
