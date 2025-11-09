@@ -5,9 +5,7 @@ ATTACHMENT_DIR ?= data/attachments
 REPORT_DIR ?= reports
 SAMPLES_DIR ?= samples
 
-.PHONY: pipeline ingest extract reports clean
-
-pipeline: ingest extract reports
+.PHONY: pipeline ingest extract report reports clean clean-reports clean-raw
 
 ingest:
 	$(PYTHON) src/ingest_emails.py \
@@ -19,8 +17,18 @@ ingest:
 extract:
 	$(PYTHON) src/run_extraction.py --db-path $(DB_PATH)
 
-reports:
+report:
 	$(PYTHON) src/run_reports.py --db-path $(DB_PATH) --output-dir $(REPORT_DIR)
+
+reports: report
+
+pipeline: ingest extract report
 
 clean:
 	rm -rf $(DB_PATH) $(RAW_DIR) $(ATTACHMENT_DIR) $(REPORT_DIR)
+
+clean-reports:
+	rm -rf $(REPORT_DIR)
+
+clean-raw:
+	rm -rf $(RAW_DIR) $(ATTACHMENT_DIR)
